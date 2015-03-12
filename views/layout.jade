@@ -1,0 +1,39 @@
+doctype html
+html
+  head
+    title= title
+
+    // Viewport mobile tag for sensible mobile support
+    meta(name="viewport",content="width=device-width, initial-scale=1, maximum-scale=1")
+
+    block styles
+
+  body
+    block body
+
+    // The linker searches for this tag and adds js.  If there's no linker, we point to sails.io.js
+    // SCRIPTS
+    script(src="/js/dependencies/sails.io.js")
+    script(src="/js/bootstrap.min.js")
+    script(src="/js/inspinia.js")
+    script(src="/js/jquery-2.1.1.js")
+    script(src="/js/pages/facturen/newQuote.js")
+    script(src="/js/pages/index.js")
+    script(src="/js/pages/klanten/edit.js")
+    script(src="/js/pages/klanten/index.js")
+    script(src="/js/pages/stock/index.js")
+    script(src="/js/plugins/chosen/chosen.jquery.js")
+    script(src="/js/plugins/dataTables/dataTables.bootstrap.js")
+    script(src="/js/plugins/dataTables/dataTables.responsive.js")
+    script(src="/js/plugins/dataTables/jquery.dataTables.js")
+    script(src="/js/plugins/datepicker/bootstrap-datepicker.js")
+    script(src="/js/plugins/flot/jquery.flot.js")
+    script(src="/js/plugins/flot/jquery.flot.pie.js")
+    script(src="/js/plugins/flot/jquery.flot.resize.js")
+    script(src="/js/plugins/flot/jquery.flot.spline.js")
+    script(src="/js/plugins/flot/jquery.flot.tooltip.min.js")
+    script(src="/js/plugins/metisMenu/jquery.metisMenu.js")
+    script(src="/js/plugins/pace/pace.min.js")
+    script(src="/js/plugins/slimscroll/jquery.slimscroll.min.js")
+    // SCRIPTS END
+

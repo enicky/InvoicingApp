@@ -1,0 +1,172 @@
+//Created by NicholasE on 5/02/2015.
+extends ../layout
+block head
+	link(rel='stylesheet', href='/css/plugins/datepicker/datepicker3.css')
+	link(href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0-beta.3/css/select2.min.css", rel='stylesheet')
+
+block foot
+	script(src='/js/plugins/datepicker/bootstrap-datepicker.js')
+	script(src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0-beta.3/js/select2.min.js")
+	script(src='/js/pages/facturen/newQuote.js')
+
+block content
+	.row.wrapper.border-bottom.white-bg.page-heading
+		.col-lg-10
+			h2 Nieuwe Offerte
+			ol.breadcrumb
+				li
+					a(href='/authenticated/index') Home
+				li
+					a(href='/authenticated/stock') Offertes
+				li.active
+					strong Nieuwe Offerte
+		.col-lg-2
+	.row.wrapper.wrapper-content.animated.fadeInRight
+		.col-lg-12
+			.ibox.float-e-margins
+				.ibox-title
+					h5 Nieuwe Offerte
+				.ibox-content
+					form.form-horizontal(method='POST', action='/authenticated/facturen/newQuote')
+						.col-lg-4
+							.form-group
+								label.col-lg-2.control-label Naam
+								.col-lg-10
+									input.form-control(type='text', placeholder='Titel', name='titel')
+							.form-group
+								label.col-lg-2.control-label Klant
+								.col-lg-10
+									select#klant(data-placeholder='kies klant', class='chosen-select', style='width:350px', name='klant') &nbsp;
+										each item in klanten
+											option(value='#{item.klantnummer}') #{item.naam}
+									| &nbsp;
+									btn.btn.btn-sm.btn-default(type="button", data-toggle="modal", data-target="#newKlant")
+										i.fa.fa-plus &nbsp;
+						.col-lg-3
+							.form-group
+								label.col-lg-2.control-label Address
+								.col-lg-10
+									textarea.form-control(name="address", placeholder="address")
+						.col-lg-4
+							.form-group
+								label.col-lg-3.control-label Betalingstermijn
+								select#betalingstermijn(data-placeholder="betalingstermijn", class="chosen-select", style="width:350px;", name="betalingstermijn")
+									option(value="7") 7 dagen
+									option(value="30") 30 dagen
+									option(value="60") 60 dagen
+							.form-group#data_1
+								label.col-lg-3.control-label Factuurdatum
+								.input-group.date
+									span.input-group-addon
+										i.fa.fa-calendar
+									input.form-control(type='text', value='#{today}', name='factuurdatum')
+							.form-group#data_betaaldatum
+								label.col-lg-3.control-label Betaaldatum
+								.input-group.date
+									span.input-group-addon
+										i.fa.fa-calendar
+									input.form-control(type='text', value='#{due}', name="betaaldatum")
+					.clearfix
+	.row.wrapper.wrapper-content.animated.fadeInRight
+		.col-lg-12
+			.ibox.float-e-margins
+				.ibox-title
+					h5 Producten
+				.ibox-content
+					form.form-horizontal(method='POST', action='/authenticated/facturen/newQuote')
+						.col-lg-12
+							table#tableProducten.table.table-bordered
+								thead
+									tr
+										th #
+										th Product
+										th Beschrijving
+										th Eenheidsprijs
+										th Aantal
+										th Korting
+										th Totaal
+								tbody
+									tr
+										td
+											a.btn.btn-sm.btn-danger(name='btnDelete')
+												i.fa.fa-trash &nbsp;
+										td
+											select.product(data-placeholder='kies product', style='width:350px', name='product') &nbsp;
+												each item in producten
+													option(value='#{item.artikelnummer}', data-prijs='#{item.prijs}') #{item.naam}
+											| &nbsp;
+											btn.btn.btn-sm.btn-default(type="button", data-toggle="modal", data-target="#newKlant")
+												i.fa.fa-plus &nbsp;
+										td Mark
+										td
+											input.form-control(type='text', name='txtPrijs', value='')
+										td
+											input.form-control(type='test',name='txtAantal', value='')
+										td
+											span 0
+										td
+											input.form-control.text-right(type='test', name='txtTotaal', value='', disabled)
+									tr
+										td
+											a.btn.btn-sm.btn-danger(name='btnDelete')
+												i.fa.fa-trash &nbsp;
+										td
+											select.product(data-placeholder='kies product', style='width:350px', name='product') &nbsp;
+												each item in producten
+													option(value='#{item.artikelnummer}', data-prijs='#{item.prijs}') #{item.naam}
+											| &nbsp;
+											btn.btn.btn-sm.btn-default(type="button", data-toggle="modal", data-target="#newKlant")
+												i.fa.fa-plus &nbsp;
+										td Mark
+										td
+											input.form-control(type='text', name='txtPrijs', value='')
+										td
+											input.form-control(type='test',name='txtAantal', value='')
+										td
+											span 0
+										td
+											input.form-control.text-right(type='test', name='txtTotaal', value='', disabled)
+									tr
+										td(colspan=2)
+											a.btn.btn-sm.btn-primary(name="btnAddProduct")
+												i.fa.fa-plus &nbsp;
+										td(colspan=4)
+											span Sub Totaal
+										td
+											input.form-control.text-right(type="text", name="txtSubTotal", disabled)
+									tr
+										td(colspan=2) &nbsp;
+										td(colspan=4)
+											span BTW Totaal
+										td
+											input.form-control.text-right(type="text", name="txtBtwTotal", disabled)
+									tr
+										td(colspan=2) &nbsp;
+										td(colspan=4)
+											span BTW Totaal
+										td
+											input.form-control.text-right(type="text", name="txtTotalTotal", disabled)
+					.clearfix
+
+#newKlant.modal.inmodal(tabindex='-1', role='dialog', aria-hidden='true')
+		.modal-dialog
+			.modal-content.animated.fadeIn
+				.modal-header
+					button.close(type='button', data-dismiss='modal')
+						span(aria-hidden='true') &times;
+						span.sr-only Close
+					h4.modal-title Nieuwe Klant
+					| &nbsp;
+					small Vul hier de gegevens in om snel een nieuwe klant te maken
+				| &nbsp;
+				.modal-body
+					.form-group
+						label Klant
+						input.form-control(placeholder='Klant naam', name='klantnaam')
+					.form-group
+						label Straat
+						input.form-control(placeholder='straat', name='straat')
+				.modal-footer
+					button.btn.btn-white(type='button', data-dismiss='modal') Close
+					| &nbsp;
+					button.btn.btn-primary(type='button', name='btnSaveKlant') Save changes

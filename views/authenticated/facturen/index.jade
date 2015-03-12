@@ -1,0 +1,80 @@
+//Created by NicholasE on 5/02/2015.
+
+extends ../layout
+block head
+	link(rel='stylesheet', href='/css/plugins/dataTables/dataTables.bootstrap.css')
+	link(rel='stylesheet', href='/css/plugins/dataTables/dataTables.responsive.css')
+block foot
+	//Data Tables
+	script(src="/js/plugins/dataTables/jquery.dataTables.js")
+	script(src="/js/plugins/dataTables/dataTables.bootstrap.js")
+	script(src="/js/plugins/dataTables/dataTables.responsive.js")
+	script(src='/js/pages/stock/index.js')
+block content
+	.row.wrapper.border-bottom.white-bg.page-heading
+		.col-lg-10
+			h2 Stock
+			ol.breadcrumb
+				li
+					a(href='/authenticated/index') Home
+				li
+					a(href='/authenticated/stock') Stock
+				li.active
+					strong Alle Artikels
+		.col-lg-2
+	.wrapper.wrapper-content.animated.fadeInRight
+		.row
+			.col-lg-3
+				.ibox.float-e-margins
+					.ibox-content
+						a.btn.btn-primary(href='/authenticated/invoices/new') Voeg Factuur Toe
+						| &nbsp;
+						a.btn.btn-primary(href='/authenticated/quotes/new') Voeg Offerte Toe
+		.row
+			.col-lg-12
+				.ibox.float-e-margins
+					.ibox-title
+						h5 Overzicht van alle Facturen (alle statussen)
+						.ibox-tools
+							a.collapse-link
+								i.fa.fa-chevron-up
+							a.dropdown-toggle(data-toggle='dropdown', href='#')
+								i.fa.fa-wrench
+							ul.dropdown-menu.dropdown-user
+								li
+									a(href='#') Config option 1
+								li
+									a(href='#') Config option 2
+							a.close-link
+								i.fa.fa-times
+					.ibox-content
+						table.table.table-striped.table-bordered.table-hover.dataTables-example
+							thead
+								tr
+									th Invoice Id
+									th Title
+									th invoiceDate
+									th status
+									th Action
+							tbody
+								each item in invoices
+									tr
+										td= item.invoiceId
+										td= item.title
+										td= item.invoiceDate
+										td= item.status
+										td
+											a.btn.btn-white.btn-sm(href='/authenticated/stock/edit/#{item._id}')
+												i.fa.fa-pencil
+												| &nbsp;Edit
+											| &nbsp;
+											a.btn.btn-danger.btn-sm(href='/authenticated/stock/delete/#{item._id}')
+												i.fa.fa-trash
+												| &nbsp;Delete
+							tfoot
+								tr
+									th Invoice Id
+									th Title
+									th invoiceDate
+									th status
+									th Action
