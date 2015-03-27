@@ -7,7 +7,7 @@ module.exports = {
   appName: "Invoicing",
 
   // Port this Sails application will live on
-  port: 1337,
+  port: 80,
   host: 'invoicing.gitlab.be',
 
   // The environment the app is deployed in
