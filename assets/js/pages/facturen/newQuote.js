@@ -217,7 +217,7 @@ $(function(){
     });
 
     console.log('invoice : ', newQuote);
-    var redirectUrl = 'http://localhost:1337/authenticated/allinvoices';
+    var redirectUrl = 'http://invoicing.gitlab.be/authenticated/allinvoices';
     var targetUrl = '/authenticated/quotes/ajax/save';
     $.post(targetUrl, newQuote, function(data){
       console.log('result save : ', data);
