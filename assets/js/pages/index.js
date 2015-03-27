@@ -8,6 +8,7 @@ $(function(){
 	var data2 = [
 		[0,1],[1,0],[2,2],[3,0],[4,1],[5,3],[6,1],[7,5],[8,2],[9,3],[10,2],[11,1],[12,0],[13,2],[14,8],[15,0],[16,0]
 	];
+	/*
 	$("#flot-dashboard-chart").length && $.plot($("#flot-dashboard-chart"), [
 				data1, data2
 			],
@@ -45,4 +46,5 @@ $(function(){
 				tooltip: false
 			}
 	);
+	*/
 })

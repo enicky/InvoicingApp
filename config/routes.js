@@ -48,7 +48,36 @@ module.exports.routes = {
 
   //KLANTEN
   'get /authenticated/klanten' : 'KlantsController.index',
-  'get /authenticated/klanten/new' : 'KlantsController.new'
+  'get /authenticated/klanten/new' : 'KlantsController.new',
+  'post /authenticated/klanten/new' : 'KlantsController.postNew',
+  'get /authenticated/klanten/edit/:klantid' : 'KlantsController.edit',
+  'post /authenticated/klanten/edit' : 'KlantsController.postEdit',
+  'get /authenticated/klanten/delete/:klantid' : 'KlantsController.delete',
+
+  'post /authenticated/klanten/ajax/new' : 'KlantsController.ajaxNew',
+
+  //STOCK
+  'get /authenticated/stock' : 'StockController.index',
+  'get /authenticated/stock/new' : 'StockController.newStock',
+  'post /authenticated/stock/new' : 'StockController.postNewStock',
+  'get /authenticated/stock/edit/:stockid' : 'StockController.editStock',
+  'post /authenticated/stock/edit' : 'StockController.postEditStock',
+  'get /authenticated/stock/delete/:stockid' : 'StockController.deleteStock',
+
+  'post /authenticated/stock/ajax/new' : 'StockController.ajaxNew',
+
+  //INVOICES
+  'get /authenticated/allinvoices' : 'InvoiceController.index',
+  'get /authenticated/invoices/delete/:id' : 'InvoiceController.deleteInvoice',
+  'get /authenticated/invoices/edit/:id' : 'InvoiceController.editInvoice',
+
+  //QUOTES
+  'get /authenticated/quotes/new' :  'InvoiceController.newQuote',
+  'post /authenticated/quotes/ajax/save' :  'InvoiceController.saveNewQuote',
+
+
+  //AUTH0 login
+  'get /Auth0Login' : 'Auth0Controller.index'
 
   /***************************************************************************
   *                                                                          *

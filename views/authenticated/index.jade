@@ -2,96 +2,99 @@ extends layout
 
 block content
 
-	.row.border-bottom.white-bg.dashboard-header
+  .row.border-bottom.white-bg.dashboard-header
 
-		.col-sm-9
-			.flot-chart.dashboard-chart
-				div#flot-dashboard-chart.flot-chart-content
-			.row.text-left
-				.col-xs-4
-					.m-l-md
-						span.h4.font-bold.m-t.block $ 406,100
-						small.text-muted.m-b.block Sales marketing report
-				.col-xs-4
-					span.h4.font-bold.m-t.block $ 150,401
-					small.text-muted.m-b.block Annual sales revenue
-				.col-xs-4
-					span.h4.font-bold.m-t.block $ 16,822
-					small.text-muted.m-b.block Half-year revenue margin
-		.col-sm-3
-			.statistic-box
-				h4
-					| Project Beta progress
-				p
-					| You have two project with not compleated task.
-				.row.text-center
-					.col-lg-6
-						canvas#polarChart(width='80', height='80')
-						h5 Kolter
-					.col-lg-6
-						canvas#doughnutChart(width='78', height='78')
-						h5 Maxtor
-				.m-t
-					small Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+    .col-sm-9
+      .flot-chart.dashboard-chart
+        div#flot-dashboard-chart.flot-chart-content
+      .row.text-left
+        .col-xs-4
+          .m-l-md
+            span.h4.font-bold.m-t.block $ 406,100
+            small.text-muted.m-b.block Sales marketing report
+        .col-xs-4
+          span.h4.font-bold.m-t.block $ 150,401
+          small.text-muted.m-b.block Annual sales revenue
+        .col-xs-4
+          span.h4.font-bold.m-t.block $ 16,822
+          small.text-muted.m-b.block Half-year revenue margin
+    .col-sm-3
+      .statistic-box
+        h4
+          | Project Beta progress
+        p
+          | You have two project with not compleated task.
+        .row.text-center
+          .col-lg-6
+            canvas#polarChart(width='80', height='80')
+            h5 Kolter
+          .col-lg-6
+            canvas#doughnutChart(width='78', height='78')
+            h5 Maxtor
+        .m-t
+          small Lorem Ipsum is simply dummy text of the printing and typesetting industry.
 
-	.row
-		.col-lg-12
-			.wrapper.wrapper-content
-				.row
-					.col-lg-4
-						.ibox.float-e-margins
-							.ibox-title
-								h5 Stock Overzicht (Bijna Op)
-								span.label.label-primary.pull-right Stock
-							.ibox-content
-								each item in emptystock
-									div
-										.pull-right.text-right
-											small.font-bold.text-danger #{item.stock}
-										h4
-											| Artikel #{item.naam} (#{item.artikelnummer})
-											br
-											small.m-r
-												a(href='graph²_flot.html')  Controleer Artikel!
-								a.btn.btn-primary.btn-block.m-t(href='/authenticated/stock')
-									i.fa.fa-arrow-down
-									| &nbsp;Toon Stock
-					.col-lg-4
-						.ibox.float-e-margins
-							.ibox-title
-								h5 Belangrijke Klanten
-								.ibox-tools
-									span &nbsp;
-							.ibox-content
-								div
-									.feed-activity-list
-										each klant in important
-											.feed-element
-												a.pull-left(href='/authenticated/klanten/edit/#{klant._id}') Link
-												.media-body
-													strong= klant.naam
-									a.btn.btn-primary.btn-block.m-t(href='/authenticated/klanten')
-										i.fa.fa-arrow-down
-										| &nbsp;Toon alle klanten
-					.col-lg-4
-						.ibox.float-e-margins
-							.ibox-title
-								h5 Openstaande facturen
-								span.label.label-danger.pull-right Facturen
-							.ibox-content
-								div
-									.pull-right.text-right
-										small.font-bold.text-danger € 2.221,45
-									h4
-										| Factuur 2416 (Nicky Eichmann)
-										br
-										small.m-r
-											a(href='graph²_flot.html')  Open Factuur
-								div
-									.pull-right.text-right
-										small.font-bold.text-danger € 232,45
-									h4
-										| Factuur 212 (Georgy Guglielmini)
-										br
-										small.m-r
-											a(href='graph²_flot.html')  Open Factuur
+  .row
+    .col-lg-12
+      .wrapper.wrapper-content
+        .row
+          .col-lg-4
+            .ibox.float-e-margins
+              .ibox-title
+                h5 Stock Overzicht (Bijna Op)
+                span.label.label-primary.pull-right Stock
+              .ibox-content
+                each item in emptystock
+                  div
+                    .pull-right.text-right
+                      small.font-bold.text-danger #{item.stock}
+                    h4
+                      | Artikel #{item.naam} (#{item.stockid})
+                      br
+                      small.m-r
+                        a(href='/authenticated/stock/edit/#{item.stockid}')  Controleer Artikel!
+                a.btn.btn-primary.btn-block.m-t(href='/authenticated/stock')
+                  i.fa.fa-arrow-down
+                  | &nbsp;Toon Stock
+          .col-lg-4
+            .ibox.float-e-margins
+              .ibox-title
+                h5 Belangrijke Klanten
+                .ibox-tools
+                  span &nbsp;
+              .ibox-content
+                div
+                  .feed-activity-list
+                    each klant in important
+                      .feed-element
+                        a.pull-left(href='/authenticated/klanten/edit/#{klant.klantnummer}') Edit
+                        .media-body
+                          strong= klant.naam
+                  a.btn.btn-primary.btn-block.m-t(href='/authenticated/klanten')
+                    i.fa.fa-arrow-down
+                    | &nbsp;Toon alle klanten
+          .col-lg-4
+            .ibox.float-e-margins
+              .ibox-title
+                h5 Openstaande facturen
+                span.label.label-danger.pull-right Facturen
+              .ibox-content
+                div
+                  .pull-right.text-right
+                    small.font-bold.text-danger € 2.221,45
+                  h4
+                    | Factuur 2416 (Nicky Eichmann)
+                    br
+                    small.m-r
+                      a(href='graph²_flot.html')  Open Factuur
+                div
+                  .pull-right.text-right
+                    small.font-bold.text-danger € 232,45
+                  h4
+                    | Factuur 212 (Georgy Guglielmini)
+                    br
+                    small.m-r
+                      a(href='graph²_flot.html')  Open Factuur
+                a.btn.btn-primary.btn-block.m-t(href='/authenticated/allinvoices')
+                  i.fa.fa-arrow-down
+                  | &nbsp;Toon Alle Facturen

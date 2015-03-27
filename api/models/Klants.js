@@ -13,7 +13,13 @@ module.exports = {
     straat : {type : 'string'},
     nummer : {type : 'string'},
     gemeente : { type : 'string'},
-    postcode : { type : 'string'}
+    postcode : { type : 'string'},
+    important : {type : 'boolean'},
+    invoices : {
+      collection : 'invoice',
+      via : 'customer'
+    },
+    owner : { model : 'User'}
   }
 };
 

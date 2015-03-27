@@ -34,7 +34,7 @@ block content
 							i.fa.fa-times
 				.ibox-content
 					form.form-horizontal(method='POST', action='/authenticated/klanten/edit')
-						input(type='hidden', name='klantid', value='#{klant._id}')
+						input(type='hidden', name='klantid', value='#{klant.klantnummer}')
 						.form-group
 							label.col-lg-2.control-label Naam
 							.col-lg-10

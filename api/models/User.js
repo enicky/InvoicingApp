@@ -6,7 +6,11 @@ var User = {
     username  : { type: 'string', unique: true },
     email     : { type: 'email',  unique: true },
     passports : { collection: 'Passport', via: 'user' },
-    displayName : { type : 'string'}
+    displayName : { type : 'string'},
+    klanten : {
+      collection : 'Klants',
+      via : 'owner'
+    }
   }
 };
 

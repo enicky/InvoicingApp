@@ -11,6 +11,8 @@ html(lang="en")
     link(href='/styles/animate.css', rel='stylesheet')
     link(href='/styles/style.css', rel='stylesheet')
   body.gray-bg
+
+
     .middle-box.text-center.loginscreen.animated.fadeInDown
       div
         div
@@ -26,6 +28,8 @@ html(lang="en")
           a.btn.btn-default.block.full-width-m-b(href='/auth/facebook')
             i.fa.fa-facebook
             | &nbsp;Login Facebook
+          a.btn-btn-default.block.full-width-m-b(href='/auth/auth0') Auth0 Login
+          a.btn.btn-danger.btn-sm(onclick="signin()") Login
         p.m-t
           small Invoicing App @Nicky
     //

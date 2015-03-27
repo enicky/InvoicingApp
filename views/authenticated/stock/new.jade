@@ -4,48 +4,52 @@ extends ../layout
 block head
 
 block foot
-	script(src='/js/pages/stock/new.js')
+  script(src='/js/pages/stock/new.js')
 block content
-	.row.wrapper.border-bottom.white-bg.page-heading
-		.col-lg-10
-			h2 Data Tables
-			ol.breadcrumb
-				li
-					a(href='/authenticated/index') Home
-				li
-					a(href='/authenticated/stock') Stock
-				li.active
-					strong Nieuw Artikel
-		.col-lg-2
-	.row.wrapper.wrapper-content.animated.fadeInRight
-		.col-lg-5
-			.ibox.float-e-margins
-				.ibox-title
-					h5 Nieuw Artikel
-					.ibox-tools
-						a.collapse-link
-							i.fa.fa-chevron-up
-						a.dropdown-toggle(href='#', data-toggle='dropdown')
-							i.fa.fa-wrench
-						ul.dropdown-menu.dropdown-user
-							li
-								a(href='#') Config option 1
-							li
-								a(href='#') Config option 2
-						a.close-link
-							i.fa.fa-times
-				.ibox-content
-					form.form-horizontal(method='POST', action='/authenticated/stock/new')
-						.form-group
-							label.col-lg-2.control-label Naam
-							.col-lg-10
-								input.form-control(type='text', placeholder='Naam', name='naam')
-						.form-group
-							label.col-lg-2.control-label Stock
-							.col-lg-10
-								input.form-control(type='number', placeholder='Stock', name='stock')
-						.form-group
-							.col-lg-offset-2.col-lg-10
-								button.btn.btn-sm.btn-white(type='submit') Sla Op
-								| &nbsp;
-								a.btn.btn-sm.btn-danger(href='/authenticated/stock') Ga terug
+  .row.wrapper.border-bottom.white-bg.page-heading
+    .col-lg-10
+      h2 Data Tables
+      ol.breadcrumb
+        li
+          a(href='/authenticated/index') Home
+        li
+          a(href='/authenticated/stock') Stock
+        li.active
+          strong Nieuw Artikel
+    .col-lg-2
+  .row.wrapper.wrapper-content.animated.fadeInRight
+    .col-lg-5
+      .ibox.float-e-margins
+        .ibox-title
+          h5 Nieuw Artikel
+          .ibox-tools
+            a.collapse-link
+              i.fa.fa-chevron-up
+            a.dropdown-toggle(href='#', data-toggle='dropdown')
+              i.fa.fa-wrench
+            ul.dropdown-menu.dropdown-user
+              li
+                a(href='#') Config option 1
+              li
+                a(href='#') Config option 2
+            a.close-link
+              i.fa.fa-times
+        .ibox-content
+          form.form-horizontal(method='POST', action='/authenticated/stock/new')
+            .form-group
+              label.col-lg-2.control-label Naam
+              .col-lg-10
+                input.form-control(type='text', placeholder='Naam', name='naam')
+            .form-group
+              label.col-lg-2.control-label Stock
+              .col-lg-10
+                input.form-control(type='number', placeholder='Stock', name='stock')
+            .form-group
+              label.col-lg-2.control-label Beschrijving
+              .col-lg-10
+                input.form-control(type='text', placeholder='Beschrijving', name='beschrijving')
+            .form-group
+              .col-lg-offset-2.col-lg-10
+                button.btn.btn-sm.btn-white(type='submit') Sla Op
+                | &nbsp;
+                a.btn.btn-sm.btn-danger(href='/authenticated/stock') Ga terug

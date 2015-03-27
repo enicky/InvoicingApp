@@ -48,6 +48,17 @@ module.exports.passport = {
       clientSecret: '6f55c0fa2605ea185d43c90cd7920731'
     }
   },
+  auth0 : {
+    name: 'auth0',
+    protocol : 'auth0',
+    strategy : require('passport-auth0'),
+    options : {
+      domain:       'enicky.auth0.com',
+      clientID:     'VI0JRH3HyXTUV3XLN9ZUzJzq7weXiQXg',
+      clientSecret: 'nTI3BtPTiYLCLhn1bazxOZZChbEFzAtc8TuE2b24FAICUwnay67tZ-c-cwPog0-n',
+      callbackURL:  '/auth/auth0/callback'
+    }
+  }
 /*
   google: {
     name: 'Google',

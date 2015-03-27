@@ -1,148 +1,163 @@
 doctype html
 html
-	head
-		meta(charset='utf-8')
-		meta(content='width=device-width, initial-scale=1.0', name='viewport')
-		title INSPINIA | Empty Page
-		link(rel='stylesheet', href='/styles/bootstrap.min.css')
-		link(rel='stylesheet', href='/font-awesome/css/font-awesome.css')
-		link(rel='stylesheet', href='/styles/animate.css')
-		link(rel='stylesheet', href='/styles/style.css')
-		block head
-		//	<!--
-			To collect end-user usage analytics about your application,
-			insert the following script into each page you want to track.
-			Place this code immediately before the closing </head> tag,
-			and before any other scripts. Your first data will appear
-			automatically in just a few seconds.
-			-->
-		script(type="text/javascript").
-			var appInsights=window.appInsights||function(config){
-				function s(config){t[config]=function(){var i=arguments;t.queue.push(function(){t[config].apply(t,i)})}}var t={config:config},r=document,f=window,e="script",o=r.createElement(e),i,u;for(o.src=config.url||"//az416426.vo.msecnd.net/scripts/a/ai.0.js",r.getElementsByTagName(e)[0].parentNode.appendChild(o),t.cookie=r.cookie,t.queue=[],i=["Event","Exception","Metric","PageView","Trace"];i.length;)s("track"+i.pop());return config.disableExceptionTracking||(i="onerror",s("_"+i),u=f[i],f[i]=function(config,r,f,e,o){var s=u&&u(config,r,f,e,o);return s!==!0&&t["_"+i](config,r,f,e,o),s}),t
-			}({
-				instrumentationKey:"417cec83-3940-4111-99e1-41f48ad127d4"
-			});
-			window.appInsights=appInsights;
-			appInsights.trackPageView();
+  head
+    meta(charset='utf-8')
+    meta(content='width=device-width, initial-scale=1.0', name='viewport')
+    title INSPINIA | Empty Page
+    link(rel='stylesheet', href='/styles/bootstrap.min.css')
+    link(rel='stylesheet', href='/font-awesome/css/font-awesome.css')
+    link(rel='stylesheet', href='/styles/animate.css')
+    link(rel='stylesheet', href='/styles/style.css')
+    block head
+    //	<!--
+        To collect end-user usage analytics about your application,
+        insert the following script into each page you want to track.
+        Place this code immediately before the closing </head> tag,
+        and before any other scripts. Your first data will appear
+        automatically in just a few seconds.
+        -->
+    script(type="text/javascript").
+      var appInsights = window.appInsights || function (config) {
+          function s(config) {
+            t[config] = function () {
+              var i = arguments;
+              t.queue.push(function () {
+                t[config].apply(t, i)
+              })
+            }
+          }
+
+          var t = {config: config}, r = document, f = window, e = "script", o = r.createElement(e), i, u;
+          for (o.src = config.url || "//az416426.vo.msecnd.net/scripts/a/ai.0.js", r.getElementsByTagName(e)[0].parentNode.appendChild(o), t.cookie = r.cookie, t.queue = [], i = ["Event", "Exception", "Metric", "PageView", "Trace"]; i.length;)s("track" + i.pop());
+          return config.disableExceptionTracking || (i = "onerror", s("_" + i), u = f[i], f[i] = function (config, r, f, e, o) {
+            var s = u && u(config, r, f, e, o);
+            return s !== !0 && t["_" + i](config, r, f, e, o), s
+          }), t
+        }({
+          instrumentationKey: "417cec83-3940-4111-99e1-41f48ad127d4"
+        });
+      window.appInsights = appInsights;
+      appInsights.trackPageView();
 body.pace-done
-		.pace.pace-inactive
-			.pace-progress(style='width: 100%;', data-progress-text='100%', data-progress='99')
-				.pace-progress-inner
-			.pace-activity
-		#wrapper
-			nav.navbar-default.navbar-static-side(role='navigation')
-				.sidebar-collapse
-					ul#side-menu.nav
-						li.nav-header
-							.dropdown.profile-element
-								span
-									//img.img-circle(src='/img/profile_small.jpg', alt='image')
-								a.dropdown-toggle(href='#', data-toggle='dropdown')
-									span.clear
-										span.block.m-t-xs
-											strong.font-bold= displayName
+  .pace.pace-inactive
+    .pace-progress(style='width: 100%;', data-progress-text='100%', data-progress='99')
+      .pace-progress-inner
+    .pace-activity
+  #wrapper
+    nav.navbar-default.navbar-static-side(role='navigation')
+      .sidebar-collapse
+        ul#side-menu.nav
+          li.nav-header
+            .dropdown.profile-element
+              span
+                //img.img-circle(src='/img/profile_small.jpg', alt='image')
+              a.dropdown-toggle(href='#', data-toggle='dropdown')
+                span.clear
+                  span.block.m-t-xs
+                    strong.font-bold= displayName
 
 
-							.logo-element
-								| IN+
-						li
-							a(href='/authenticated/index')
-								i.fa.fa-th-large
-								span.nav-label Dashboards
+            .logo-element
+              | IN+
+          li
+            a(href='/authenticated/index')
+              i.fa.fa-th-large
+              span.nav-label Dashboards
 
-						li
-							a(href='#')
-								i.fa.fa-bar-chart-o
-								span.nav-label Klanten
-								span.fa.arrow
-							ul.nav.nav-second-level.collapse
-								li
-									a(href='/authenticated/klanten') Alle klanten
-								li
-									a(href='/authenticated/klanten/new') Nieuwe Klant
-						li
-							a(href='#')
-								i.fa.fa-barcode
-								span.nav-label Stockbeheer
-								span.fa.arrow
-							ul.nav.nav-second-level.collapse
-								li
-									a(href='/authenticated/stock') Alle Artikels
-								li
-									a(href='/authenticated/stock/new') Nieuw Artikel
-						li
-							a(href='#')
-								i.fa.fa-credit-card
-								span.nav-label Facturen
-								span.fa.arrow
-							ul.nav.nav-second-level.collapse
-								li
-									a(href='/authenticated/allinvoices') Alle Facturen
-								li
-									a(href='/authenticated/quotes') Offertes
-								li
-									a(href='/authenticated/delivery') Leverbonnen
-								li
-									a(href='/authenticated/invoices') Facturen
-								li
-									a(href='/authenticates/unpaidinvoices') Onbetaalde Facturen
-			#page-wrapper.gray-bg.dashboard-1
-				.row.border-bottom
-					nav.navbar.navbar-static-top(style='margin-bottom: 0;', role='navigation')
-						.navbar-header
-							a.navbar-minimalize.minimalize-styl-2.btn.btn-primary(href='#')
-								i.fa.fa-bars
-							form.navbar-form-custom(action='search_results.html', method='post', role='search')
-								.form-group
-									input#top-search.form-control(type='text', name='top-search', placeholder='Search for something...')
-						ul.nav.navbar-top-links.navbar-right
+          li
+            a(href='#')
+              i.fa.fa-bar-chart-o
+              span.nav-label Klanten
+              span.fa.arrow
+            ul.nav.nav-second-level.collapse
+              li
+                a(href='/authenticated/klanten') Alle klanten
+              li
+                a(href='/authenticated/klanten/new') Nieuwe Klant
+          li
+            a(href='#')
+              i.fa.fa-barcode
+              span.nav-label Stockbeheer
+              span.fa.arrow
+            ul.nav.nav-second-level.collapse
+              li
+                a(href='/authenticated/stock') Alle Artikels
+              li
+                a(href='/authenticated/stock/new') Nieuw Artikel
+          li
+            a(href='#')
+              i.fa.fa-credit-card
+              span.nav-label Facturen
+              span.fa.arrow
+            ul.nav.nav-second-level.collapse
+              li
+                a(href='/authenticated/allinvoices') Alle Facturen
+              li
+                a(href='/authenticated/quotes') Offertes
+              li
+                a(href='/authenticated/delivery') Leverbonnen
+              li
+                a(href='/authenticated/invoices') Facturen
+              li
+                a(href='/authenticates/unpaidinvoices') Onbetaalde Facturen
+    #page-wrapper.gray-bg.dashboard-1
+      .row.border-bottom
+        nav.navbar.navbar-static-top(style='margin-bottom: 0;', role='navigation')
+          .navbar-header
+            a.navbar-minimalize.minimalize-styl-2.btn.btn-primary(href='#')
+              i.fa.fa-bars
+            form.navbar-form-custom(action='search_results.html', method='post', role='search')
+              .form-group
+                input#top-search.form-control(type='text', name='top-search', placeholder='Search for something...')
+          ul.nav.navbar-top-links.navbar-right
 
-							li.dropdown
-								a.dropdown-toggle.count-info(href='#', data-toggle='dropdown')
-									i.fa.fa-envelope
-									span.label.label-warning 0
+            li.dropdown
+              a.dropdown-toggle.count-info(href='#', data-toggle='dropdown')
+                i.fa.fa-envelope
+                span.label.label-warning 0
 
-							li.dropdown
-								a.dropdown-toggle.count-info(href='#', data-toggle='dropdown')
-									i.fa.fa-bell
-									span.label.label-primary 0
+            li.dropdown
+              a.dropdown-toggle.count-info(href='#', data-toggle='dropdown')
+                i.fa.fa-bell
+                span.label.label-primary 0
 
-							li
-								a(href='/logout')
-									i.fa.fa-sign-out
-									| Log out
+            li
+              a(href='/logout')
+                i.fa.fa-sign-out
+                | Log out
 
 
-				block content
-				.footer
-					.pull-right
-						| 10GB of
-						strong 250GB
-						| Free.
-					div
-						strong Copyright
-						| Example Company © 2014-2015
-		//
-			Mainly scripts
-		script(src='/js/jquery-2.1.1.js')
-		script(src='/js/bootstrap.min.js')
-		script(src='/js/plugins/metisMenu/jquery.metisMenu.js')
-		script(src='/js/plugins/slimscroll/jquery.slimscroll.min.js')
+      block content
+      .footer
+        .pull-right
+          | 10GB of
+          strong 250GB
+          | Free.
+        div
+          strong Copyright
+          | Example Company © 2014-2015
+  //
+      Mainly scripts
+  script(src='/js/jquery-2.1.1.js')
+  script(src='/js/bootstrap.min.js')
+  script(src='/js/plugins/metisMenu/jquery.metisMenu.js')
+  script(src='/js/plugins/slimscroll/jquery.slimscroll.min.js')
 
-		script(src='//cdnjs.cloudflare.com/ajax/libs/sugar/1.4.1/sugar-full.development.js')
+  script(src='//cdnjs.cloudflare.com/ajax/libs/sugar/1.4.1/sugar-full.development.js')
 
-		//Flot
-		script(src='/js/plugins/flot/jquery.flot.js')
-		script(src='/js/plugins/flot/jquery.flot.tooltip.min.js')
-		script(src='/js/plugins/flot/jquery.flot.spline.js')
-		script(src='/js/plugins/flot/jquery.flot.resize.js')
-		script(src='/js/plugins/flot/jquery.flot.pie.js')
+  //Flot
+  //script(src='/js/plugins/flot/jquery.flot.js
+  script(src='//cdnjs.cloudflare.com/ajax/libs/flot/0.7.0/jquery.flot.js')
+  script(src='/js/plugins/flot/jquery.flot.tooltip.min.js')
+  script(src='/js/plugins/flot/jquery.flot.spline.js')
+  script(src='/js/plugins/flot/jquery.flot.resize.js')
+  script(src='/js/plugins/flot/jquery.flot.pie.js')
 
-		block foot
+  block foot
 
-		//
-			Custom and plugin javascript
-		script(src='/js/inspinia.js')
-		script(src='/js/plugins/pace/pace.min.js')
+  //
+      Custom and plugin javascript
+  script(src='/js/inspinia.js')
+  script(src='/js/plugins/pace/pace.min.js')
 
-		script(src='/js/pages/index.js')
+  script(src='/js/pages/index.js')

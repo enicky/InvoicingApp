@@ -7,7 +7,7 @@ block head
 block foot
   script(src='/js/plugins/datepicker/bootstrap-datepicker.js')
   script(src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0-beta.3/js/select2.min.js")
-  script(src='/js/pages/facturen/newQuote.js')
+  script(src='/js/pages/facturen/editQuote.js')
 
 block content
   .row.wrapper.border-bottom.white-bg.page-heading
@@ -17,7 +17,7 @@ block content
         li
           a(href='/authenticated/index') Home
         li
-          a(href='/authenticated/stock') Offertes
+          a(href='/authenticated/allinvoices') Offertes
         li.active
           strong Nieuwe Offerte
     .col-lg-2
@@ -33,20 +33,25 @@ block content
     .col-lg-12
       .ibox.float-e-margins
         .ibox-title
-          h5 Nieuwe Offerte
+          h5 Edit Offerte
         .ibox-content
           form.form-horizontal(method='POST', action='/authenticated/facturen/newQuote')
+            input(type='hidden', value='#{invoice.invoceid}', name='hdnInvoiceId')
+            input(type='hidden', value='#{invoice.customer}', name='hdnKlantId')
             .col-lg-4
               .form-group
                 label.col-lg-2.control-label Naam
                 .col-lg-10
-                  input.form-control(type='text', placeholder='Titel', name='titel')
+                  input.form-control(type='text', placeholder='Titel', name='titel', value='#{invoice.title}')
               .form-group
                 label.col-lg-2.control-label Klant
                 .col-lg-10
                   select#klant(data-placeholder='kies klant', class='chosen-select', style='width:350px', name='klant') &nbsp;
                     each item in klanten
-                      option(value='#{item.klantnummer}') #{item.naam}
+                      -if(item.klantnummer == invoice.customer)
+                        option(value='#{item.klantnummer}' selected) #{item.naam}
+                      -else
+                        option(value='#{item.klantnummer}') #{item.naam}
                   | &nbsp;
                   btn.btn.btn-sm.btn-default(type="button", data-toggle="modal", data-target="#newKlant")
                     i.fa.fa-plus &nbsp;

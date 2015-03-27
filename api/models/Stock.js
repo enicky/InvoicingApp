@@ -9,10 +9,13 @@ module.exports = {
 
   attributes: {
     stockid : {type: 'integer', autoIncrement : true },
+    artikelnummer : {type : 'string'},
+    externArtikelNummer : {type : 'string'},
     name : 'string',
-    stock : {type : 'integer', default : 0},
-    prijs : { type : 'float', default : 0}
-
+    stock : {type : 'integer', defaultsTo : 0},
+    prijs : { type : 'float', defaultsTo : 0},
+    beschrijving: {type : 'string'},
+    owner : { model : 'User'}
   }
 };
 

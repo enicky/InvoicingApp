@@ -63,7 +63,7 @@ passport.protocols = require('./protocols');
  * @param {Function} next
  */
 passport.connect = function (req, query, profile, next) {
-
+  //console.log('connect ... ');
   var user = {}
     , provider;
 
@@ -72,6 +72,7 @@ passport.connect = function (req, query, profile, next) {
   // Use profile.provider or fallback to the query.provider if it is undefined
   // as is the case for OpenID, for example
   provider = profile.provider || query.provider;
+  if(query.provider != profile.provider) provider = query.provider;
 
   // If the provider cannot be identified we cannot match it to a passport so
   // throw an error and let whoever's next in line take care of it.
@@ -92,6 +93,9 @@ passport.connect = function (req, query, profile, next) {
     if(typeof user.username == 'undefined'){
       user.username = profile.id;
     }
+  }
+  if(profile.hasOwnProperty('id')){
+    user.username = profile.id;
   }
   // If neither an email or a username was available in the profile, we don't
   // have a way of identifying the user in the future. Throw an error and let
@@ -226,7 +230,8 @@ passport.callback = function (req, res, next) {
   var provider = req.param('provider', 'local')
     , action   = req.param('action');
 
-
+  //console.log('dedd', provider);
+  //console.log('kkkk', action);
 
   // Passport.js wasn't really built for local user registration, but it's nice
   // having it tied into everything else.
@@ -281,7 +286,6 @@ passport.callback = function (req, res, next) {
 passport.loadStrategies = function () {
   var self       = this
     , strategies = sails.config.passport;
-
   Object.keys(strategies).forEach(function (key) {
     var options = { passReqToCallback: true }, Strategy;
 
@@ -326,8 +330,27 @@ passport.loadStrategies = function () {
       // defaults can be overriden, but I don't see a reason why you'd want to
       // do that.
       _.extend(options, strategies[key].options);
+      if(key == 'auth0'){
 
+        var s= new Strategy(options, function(req, accessToken, refreshToken, params, profile, done){
+          var query    = {
+            identifier : profile.id
+            , protocol   : 'oauth2'
+            , tokens     : { accessToken: accessToken }
+          };
+
+          if (refreshToken !== undefined) {
+            query.tokens.refreshToken = refreshToken;
+          }
+
+          passport.connect(req, query, profile, done);
+
+          //return done(null, p);
+        });
+        self.use(s);
+      }else{
       self.use(new Strategy(options, self.protocols[protocol]));
+      }
     }
   });
 };

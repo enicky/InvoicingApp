@@ -18,11 +18,20 @@
 
 
 module.exports.policies = {
+  //'*': ['passport']
+
+
+  Auth0ControllerController : {
+    '*' : true
+  },
   '*': ['passport', 'sessionAuth'],
+  //'*': ['passport'],
 
   'auth': {
     '*': ['passport']
   }
+
+
   /***************************************************************************
   *                                                                          *
   * Default policy for all controllers and actions (`true` allows public     *
