@@ -45,6 +45,7 @@ block content
                 label.col-lg-2.control-label Klant
                 .col-lg-10
                   select#klant(data-placeholder='kies klant', class='chosen-select', style='width:350px', name='klant') &nbsp;
+                    option
                     each item in klanten
                       option(value='#{item.klantnummer}') #{item.naam}
                   | &nbsp;
