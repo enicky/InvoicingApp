@@ -46,6 +46,7 @@ block content
                 .col-lg-10
                   select#klant(data-placeholder='kies klant', class='chosen-select', style='width:350px', name='klant') &nbsp;
                     option
+                    //fixed line
                     each item in klanten
                       option(value='#{item.klantnummer}') #{item.naam}
                   | &nbsp;
