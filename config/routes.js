@@ -66,6 +66,7 @@ module.exports.routes = {
 
   'post /authenticated/stock/ajax/new' : 'StockController.ajaxNew',
 
+
   //INVOICES
   'get /authenticated/allinvoices' : 'InvoiceController.index',
   'get /authenticated/invoices/delete/:id' : 'InvoiceController.deleteInvoice',
@@ -74,6 +75,9 @@ module.exports.routes = {
   //QUOTES
   'get /authenticated/quotes/new' :  'InvoiceController.newQuote',
   'post /authenticated/quotes/ajax/save' :  'InvoiceController.saveNewQuote',
+  'post /authenticated/quotes/ajax/update' : 'InvoiceController.ajaxUpdate',
+
+  'get /authenticated/invoices/print/quote/:quoteid' : 'InvoiceController.printQuote',
 
 
   //AUTH0 login

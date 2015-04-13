@@ -200,7 +200,7 @@ $(function(){
     var trs = $('#tableProducten tbody tr');
     trs.each(function(el, index, arr){
       if($(this).find(':selected').length > 0){
-      var product = $(this).find(':selected').data().id;
+      var product = $(this).find(':selected').val();
       var prijs = $(this).find('[name="txtPrijs"]').val();
       var aantal = $(this).find('[name="txtAantal"]').val();
       var totaal = $(this).find('[name="txtTotaal"]').val();
@@ -217,7 +217,13 @@ $(function(){
     });
 
     console.log('invoice : ', newQuote);
-    var redirectUrl = 'http://invoicing.gitlab.be/authenticated/allinvoices';
+    var protocol = window.location.protocol;
+    var hostname = window.location.hostname;
+    var port = window.location.port;
+    var firstPart = protocol + '//' + hostname;
+    if(port && port != "") firstPart += ':' + port;
+
+    var redirectUrl = firstPart + '/authenticated/allinvoices';
     var targetUrl = '/authenticated/quotes/ajax/save';
     $.post(targetUrl, newQuote, function(data){
       console.log('result save : ', data);

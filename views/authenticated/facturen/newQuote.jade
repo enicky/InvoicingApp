@@ -104,7 +104,7 @@ block content
                       select.product(data-placeholder='kies product', style='width:350px', name='product', data-rownum="1") &nbsp;
                         option
                         each item in producten
-                          option(value='#{item.artikelnummer}', data-prijs='#{item.prijs}', data-id='#{item.artikelnummer}', data-description='#{item.beschrijving}') #{item.name}
+                          option(value='#{item.id}', data-prijs='#{item.prijs}', data-id='#{item.artikelnummer}', data-description='#{item.beschrijving}') #{item.name}
                       | &nbsp;
                       btn.btn.btn-sm.btn-default(type="button", data-modaltype="article", data-target="#newArtikel", data-rownum="1")
                         i.fa.fa-plus &nbsp;
@@ -126,7 +126,7 @@ block content
                       select.product(data-placeholder='kies product', style='width:350px', name='product', data-rownum="2") &nbsp;
                         option
                         each item in producten
-                          option(value='#{item.artikelnummer}', data-prijs='#{item.prijs}', data-id='#{item.artikelnummer}', data-description='#{item.beschrijving}') #{item.name}
+                          option(value='#{item.id}', data-prijs='#{item.prijs}', data-id='#{item.artikelnummer}', data-description='#{item.beschrijving}') #{item.name}
                       | &nbsp;
                       btn.btn.btn-sm.btn-default(type="button",  data-modaltype="article", data-target="#newArtikel", data-rownum="2")
                         i.fa.fa-plus &nbsp;

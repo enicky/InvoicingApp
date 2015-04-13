@@ -26,7 +26,7 @@ block content
           i.fa.fa-check
           | &nbsp;Save
         | &nbsp;
-        a.btn.btn-primary
+        a.btn.btn-primary(href='/authenticated/invoices/print/quote/#{invoice.invoceid}')
           i.fa.fa-print
           | &nbsp;Print
   .row.wrapper.wrapper-content.animated.fadeInRight
@@ -38,6 +38,7 @@ block content
           form.form-horizontal(method='POST', action='/authenticated/facturen/newQuote')
             input(type='hidden', value='#{invoice.invoceid}', name='hdnInvoiceId')
             input(type='hidden', value='#{invoice.customer}', name='hdnKlantId')
+            input(type='hidden', value='#{JSON.stringify(invoice.invoiceLines)}', name='hdnInvoiceLines')
             .col-lg-4
               .form-group
                 label.col-lg-2.control-label Naam
@@ -63,7 +64,7 @@ block content
             .col-lg-4
               .form-group
                 label.col-lg-3.control-label Betalingstermijn
-                select#betalingstermijn(data-placeholder="betalingstermijn", class="chosen-select", style="width:350px;", name="betalingstermijn")
+                select#betalingstermijn(data-placeholder="betalingstermijn", class="chosen-select", style="width:350px;", name="betalingstermijn", data-val="#{invoice.betalingstermijn}")
                   option(value="7") 7 dagen
                   option(value="30") 30 dagen
                   option(value="60") 60 dagen
@@ -104,10 +105,10 @@ block content
                       a.btn.btn-sm.btn-danger(name='btnDelete')
                         i.fa.fa-trash &nbsp;
                     td
-                      select.product(data-placeholder='kies product', style='width:350px', name='product', data-rownum="1") &nbsp;
+                      select.product(data-placeholder='kies product', style='width:350px', name='product', data-rownum="1", value="") &nbsp;
                         option
                         each item in producten
-                          option(value='#{item.artikelnummer}', data-prijs='#{item.prijs}', data-id='#{item.artikelnummer}', data-description='#{item.beschrijving}') #{item.name}
+                          option(value='#{item.stockid}', data-prijs='#{item.prijs}', data-id='#{item.stockid}', data-description='#{item.beschrijving}') #{item.name}
                       | &nbsp;
                       btn.btn.btn-sm.btn-default(type="button", data-modaltype="article", data-target="#newArtikel", data-rownum="1")
                         i.fa.fa-plus &nbsp;
@@ -122,47 +123,25 @@ block content
                     td
                       input.form-control.text-right(type='test', name='txtTotaal', value='', disabled)
                   tr
-                    td
-                      a.btn.btn-sm.btn-danger(name='btnDelete')
-                        i.fa.fa-trash &nbsp;
-                    td
-                      select.product(data-placeholder='kies product', style='width:350px', name='product', data-rownum="2") &nbsp;
-                        option
-                        each item in producten
-                          option(value='#{item.artikelnummer}', data-prijs='#{item.prijs}', data-id='#{item.artikelnummer}', data-description='#{item.beschrijving}') #{item.name}
-                      | &nbsp;
-                      btn.btn.btn-sm.btn-default(type="button",  data-modaltype="article", data-target="#newArtikel", data-rownum="2")
-                        i.fa.fa-plus &nbsp;
-                    td
-                      span( name='txtDescription', value='')
-                    td
-                      input.form-control(type='text', name='txtPrijs', value='')
-                    td
-                      input.form-control(type='test',name='txtAantal', value='')
-                    td
-                      span 0
-                    td
-                      input.form-control.text-right(type='text', name='txtTotaal', value='', disabled)
-                  tr
                     td(colspan=2)
                       a.btn.btn-sm.btn-primary(name="btnAddProduct")
                         i.fa.fa-plus &nbsp;
                     td(colspan=4)
                       span Sub Totaal
                     td
-                      input.form-control.text-right(type="text", name="txtSubTotal", disabled)
+                      input.form-control.text-right(type="text", name="txtSubTotal", value='#{invoice.subTotaal}' disabled)
                   tr
                     td(colspan=2) &nbsp;
                     td(colspan=4)
                       span BTW Totaal
                     td
-                      input.form-control.text-right(type="text", name="txtBtwTotal", disabled)
+                      input.form-control.text-right(type="text", name="txtBtwTotal", value='#{invoice.btwTotaal}' disabled)
                   tr
                     td(colspan=2) &nbsp;
                     td(colspan=4)
                       span BTW Totaal
                     td
-                      input.form-control.text-right(type="text", name="txtTotalTotal", disabled)
+                      input.form-control.text-right(type="text", name="txtTotalTotal", value='#{invoice.totaal}' disabled)
           .clearfix
   #newKlant.modal.inmodal(tabindex='-1', role='dialog', aria-hidden='true')
     .modal-dialog

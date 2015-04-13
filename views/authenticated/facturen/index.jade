@@ -54,6 +54,9 @@ block content
                   th Invoice Id
                   th Title
                   th invoiceDate
+                  th Totaal
+                  th Btw
+                  th Totaal Bedrag
                   th status
                   th Action
               tbody
@@ -61,20 +64,33 @@ block content
                   tr
                     td= item.invoceid
                     td= item.title
-                    td= item.invoiceDate
+                    td= formatDate(item.factuurdatum)
+                    td.text-right= item.subTotaal
+                    td.text-right= item.btwTotaal
+                    td.text-right= item.totaal
                     td= item.status
                     td
                       a.btn.btn-white.btn-sm(href='/authenticated/invoices/edit/#{item.invoceid}')
                         i.fa.fa-pencil
                         | &nbsp;Edit
                       | &nbsp;
+                      a.btn.btn-info.btn-sm(href='/authenticated/invoices/print/quote/#{item.invoceid}')
+                        i.fa.fa-print
+                        | &nbsp;Print
+                      | &nbsp;
                       a.btn.btn-danger.btn-sm(href='/authenticated/invoices/delete/#{item.invoceid}')
                         i.fa.fa-trash
                         | &nbsp;Delete
+
+
+
               tfoot
                 tr
                   th Invoice Id
                   th Title
                   th invoiceDate
+                  th Totaal
+                  th Btw
+                  th Totaal Bedrag
                   th status
                   th Action
