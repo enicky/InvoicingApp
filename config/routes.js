@@ -72,6 +72,9 @@ module.exports.routes = {
   'get /authenticated/invoices/delete/:id' : 'InvoiceController.deleteInvoice',
   'get /authenticated/invoices/edit/:id' : 'InvoiceController.editInvoice',
 
+  'get /authenticated/invoices/view/:id': 'InvoiceController.viewInvoice',
+
+
   //QUOTES
   'get /authenticated/quotes/new' :  'InvoiceController.newQuote',
   'post /authenticated/quotes/ajax/save' :  'InvoiceController.saveNewQuote',

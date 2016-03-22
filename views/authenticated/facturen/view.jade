@@ -1,0 +1,99 @@
+//Created by NicholasE on 5/02/2015.
+extends ../layout
+block head
+  link(rel='stylesheet', href='/css/plugins/datepicker/datepicker3.css')
+  link(href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0-beta.3/css/select2.min.css", rel='stylesheet')
+
+block foot
+  script(src='/js/plugins/datepicker/bootstrap-datepicker.js')
+  script(src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0-beta.3/js/select2.min.js")
+  script(src='/js/pages/facturen/viewQuote.js')
+
+block content
+  .row.wrapper.border-bottom.white-bg.page-heading
+    .col-lg-8
+      h2 Offerte #{invoice.invoceid}
+      ol.breadcrumb
+        li
+          a(href='/authenticated/index') Home
+        li
+          a(href='/authenticated/allinvoices') Invoices
+        li.active
+          strong Invoice
+    .col-lg-4
+      .title-action
+        a#btnEdit.btn.btn-white
+          i.fa.fa-check
+          | &nbsp;Edit
+        | &nbsp;
+        a.btn.btn-primary(href='/authenticated/invoices/print/quote/#{invoice.invoceid}')
+          i.fa.fa-print
+          | &nbsp;Print
+  .row
+    .col-lg-12
+      .wrapper.wrapper-content.animated.fadeInRight
+        .ibox-content.p-xl
+          .row
+            .col-sm-6
+              h5 From
+              address
+                strong Luxopus
+                br
+                | Ergensstraat 3
+                br
+                | Zonhoven
+
+            .col-sm-6.text-right
+              h4 Invoce No.
+              h4.text-navy #{invoice.invoceid}
+              span To:
+              address
+                strong #{klant.naam}
+                br
+                | #{klant.straat} #{klant.nummer}
+                br
+                | #{klant.postcode} #{klant.gemeente}
+              p
+                span
+                  strong Invoice date:&nbsp;
+                  | #{formatDate(invoice.factuurdatum)}
+                br
+                span
+                  strong Due date:&nbsp;
+                  | #{formatDate(invoice.betaaldatum)}
+          .table-responsive.m-t
+            table.table.invoice-table
+              thead
+                tr
+                  th Item List
+                  th Quantity
+                  th Unit Price
+                  th Tax
+                  th Total Price
+              tbody
+                each lijn in invoice.invoiceLines
+                  tr
+                    td #{lijn.product}
+                    td #{lijn.aantal}
+                    td #{lijn.prijs}
+                    td
+                    td #{lijn.totaal}
+            table.table.invoice-total
+              tbody
+                tr
+                  td
+                    strong Sub Total:
+                  td #{invoice.subTotaal}
+                tr
+                  td
+                    strong TAX:
+                  td #{invoice.btwTotaal}
+                tr
+                  td
+                    strong TOTAL:
+                  td #{invoice.totaal}
+            .text-right
+              a.btn.btn-primary
+                i.fa.fa-euro
+                | &nbsp;Make a Payment
+

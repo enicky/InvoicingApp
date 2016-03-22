@@ -13,7 +13,7 @@ block foot
 block content
   .row.wrapper.border-bottom.white-bg.page-heading
     .col-lg-10
-      h2 Stock
+      h2 Facturatie
       ol.breadcrumb
         li
           a(href='/authenticated/index') Home
@@ -24,7 +24,7 @@ block content
     .col-lg-2
   .wrapper.wrapper-content.animated.fadeInRight
     .row
-      .col-lg-3
+      .col-lg-6
         .ibox.float-e-margins
           .ibox-content
             a.btn.btn-primary(href='/authenticated/quotes/new') Voeg Offerte Toe
@@ -35,18 +35,7 @@ block content
         .ibox.float-e-margins
           .ibox-title
             h5 Overzicht van alle Facturen (alle statussen)
-            .ibox-tools
-              a.collapse-link
-                i.fa.fa-chevron-up
-              a.dropdown-toggle(data-toggle='dropdown', href='#')
-                i.fa.fa-wrench
-              ul.dropdown-menu.dropdown-user
-                li
-                  a(href='#') Config option 1
-                li
-                  a(href='#') Config option 2
-              a.close-link
-                i.fa.fa-times
+
           .ibox-content
             table.table.table-striped.table-bordered.table-hover.dataTables-example
               thead
@@ -70,18 +59,18 @@ block content
                     td.text-right= item.totaal
                     td= item.status
                     td
+                      a.btn.btn-default.btn-sm(href='/authenticated/invoices/view/#{item.invoceid}')
+                        i.fa.fa-eye
+                      | &nbsp;
                       a.btn.btn-white.btn-sm(href='/authenticated/invoices/edit/#{item.invoceid}')
                         i.fa.fa-pencil
-                        | &nbsp;Edit
                       | &nbsp;
                       a.btn.btn-info.btn-sm(href='/authenticated/invoices/print/quote/#{item.invoceid}')
                         i.fa.fa-print
-                        | &nbsp;Print
                       | &nbsp;
+
                       a.btn.btn-danger.btn-sm(href='/authenticated/invoices/delete/#{item.invoceid}')
                         i.fa.fa-trash
-                        | &nbsp;Delete
-
 
 
               tfoot

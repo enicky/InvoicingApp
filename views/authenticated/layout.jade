@@ -9,35 +9,7 @@ html
     link(rel='stylesheet', href='/styles/animate.css')
     link(rel='stylesheet', href='/styles/style.css')
     block head
-    //	<!--
-        To collect end-user usage analytics about your application,
-        insert the following script into each page you want to track.
-        Place this code immediately before the closing </head> tag,
-        and before any other scripts. Your first data will appear
-        automatically in just a few seconds.
-        -->
-    script(type="text/javascript").
-      var appInsights = window.appInsights || function (config) {
-          function s(config) {
-            t[config] = function () {
-              var i = arguments;
-              t.queue.push(function () {
-                t[config].apply(t, i)
-              })
-            }
-          }
 
-          var t = {config: config}, r = document, f = window, e = "script", o = r.createElement(e), i, u;
-          for (o.src = config.url || "//az416426.vo.msecnd.net/scripts/a/ai.0.js", r.getElementsByTagName(e)[0].parentNode.appendChild(o), t.cookie = r.cookie, t.queue = [], i = ["Event", "Exception", "Metric", "PageView", "Trace"]; i.length;)s("track" + i.pop());
-          return config.disableExceptionTracking || (i = "onerror", s("_" + i), u = f[i], f[i] = function (config, r, f, e, o) {
-            var s = u && u(config, r, f, e, o);
-            return s !== !0 && t["_" + i](config, r, f, e, o), s
-          }), t
-        }({
-          instrumentationKey: "417cec83-3940-4111-99e1-41f48ad127d4"
-        });
-      window.appInsights = appInsights;
-      appInsights.trackPageView();
 body.pace-done
   .pace.pace-inactive
     .pace-progress(style='width: 100%;', data-progress-text='100%', data-progress='99')
@@ -100,6 +72,14 @@ body.pace-done
                 a(href='/authenticated/invoices') Facturen
               li
                 a(href='/authenticates/unpaidinvoices') Onbetaalde Facturen
+          li
+            a(href='#')
+              i.fa.fa-cogs
+              span.nav-label Instellingen
+              span.fa.arrow
+            ul.nav.nav-second-level.collapse
+              li
+                a(href='/authenticated/settings') Settings
     #page-wrapper.gray-bg.dashboard-1
       .row.border-bottom
         nav.navbar.navbar-static-top(style='margin-bottom: 0;', role='navigation')

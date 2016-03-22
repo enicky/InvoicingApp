@@ -22,6 +22,19 @@ module.exports = {
       });
     })
   },
+  viewInvoice : function(req, res){
+    Invoice.find({owner:req.user.id, invoceid : req.params.id}).populate('customer').populate('invoiceLines').exec(function(err, invoices){
+      //sails.log.debug('Customer : ', invoices[0].customer);
+      var targetJade = './authenticated/facturen/view';
+      res.view(targetJade, {
+        invoice : invoices[0],
+        klant : invoices[0].customer,
+        formatDate : function(d){
+          return d.format('{dd}/{MM}/{yyyy}')
+        }
+      });
+    })
+  },
   deleteInvoice : function(req, res){
     var invoiceId = parseInt(req.params.id);
     //sails.log.debug('invoiceId : ', invoiceId);
