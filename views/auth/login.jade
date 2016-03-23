@@ -19,9 +19,9 @@ html(lang="en")
           h1.logo-name &nbsp;
         h3 Welcome to INVOICING
         p Login in invoicing app.
-        form.m-t(role='form', action='/login', method='POST')
+        form.m-t(role='form', action='/auth/local', method='POST')
           .form-group
-            input.form-control(type='username', placeholder='Username', required='', name='username')
+            input.form-control(type='username', placeholder='Username', required='', name='identifier')
           .form-group
             input.form-control(type='password', placeholder='Password', required='', name='password')
           button.btn.btn-primary.block.full-width.m-b(type='submit') Login
