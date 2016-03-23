@@ -124,7 +124,7 @@ module.exports = {
           res.redirect('back');
           break;
         default:
-          res.redirect('/login');
+          res.redirect('/auth/auth0');
       }
     }
 
