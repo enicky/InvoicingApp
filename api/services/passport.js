@@ -101,8 +101,8 @@ passport.connect = function(req, query, profile, next) {
   if (!user.username && !user.email) {
     return next(new Error('Neither a username nor email was available'));
   }
-  sails.log.debug('provider : ', provider);
-  sails.log.debug('identitief : ', query.identifier.toString());
+  //sails.log.debug('provider : ', provider);
+  //sails.log.debug('identitief : ', query.identifier.toString());
   Passport.findOne({
     provider: provider,
     identifier: query.identifier.toString()
@@ -110,8 +110,8 @@ passport.connect = function(req, query, profile, next) {
     if (err) {
       return next(err);
     }
-    sails.log.debug('passport : ', passport);
-    sails.log.debug('user : ', req.user);
+    //sails.log.debug('passport : ', passport);
+    //sails.log.debug('user : ', req.user);
     if (!req.user) {
       // Scenario: A new user is attempting to sign up using a third-party
       //           authentication provider.
@@ -150,16 +150,16 @@ passport.connect = function(req, query, profile, next) {
         if (query.hasOwnProperty('tokens') && query.tokens !== passport.tokens) {
           passport.tokens = query.tokens;
         }
-        sails.log('passport : ', passport);
+       // sails.log('passport : ', passport);
         // Save any updates to the Passport before moving on
         passport.save(function(err, p) {
-          sails.log.debug('err : ', err);
+         // sails.log.debug('err : ', err);
           if (err) {
             return next(err);
           }
 
-          sails.log.debug('pasport : ', passport);
-          sails.log.debug('p :', p, passport.user);
+          //sails.log.debug('pasport : ', passport);
+          //sails.log.debug('p :', p, passport.user);
           // Fetch the user associated with the Passport
           User.findOne(passport.user, next);
         });

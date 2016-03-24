@@ -90,6 +90,22 @@ module.exports = {
       return res.redirect('/authenticated/klanten');
     })
   },
+
+  ajaxdelete : function(req, res){
+    var id = req.body.klantId;
+    Klants.update({klantnummer : id}, {status : 'deleted'}, function(err){
+      Invoice.update({customer : id}, {status : 'deleted'}, function(err, updatedRecords){
+        InvoiceLine.update({invoice : _.pluck(updatedRecords, 'invoceid')}, {status : 'deleted'}, function(err){
+          return res.send({success : true});
+        });
+      });
+    });
+    /*
+    Klants.destroy({klantnummer : id}, function(err){
+      return res.send({success : true});
+    });
+    */
+  },
   ajaxNew : function(req, res){
     var naam = req.body.naam;
     var straat = req.body.straat;

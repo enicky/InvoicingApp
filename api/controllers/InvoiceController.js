@@ -69,6 +69,17 @@ module.exports = {
 
   },
 
+  ajaxDelete : function(req, res){
+    var invoiceId = req.body.invoiceid;
+    sails.log.debug('invoiceId : ', invoiceId);
+    Invoice.update({invoceid : invoiceId}, {status: 'deleted'}, function(err, invoices){
+      sails.log.debug('invoices : ', invoices);
+      InvoiceLine.update({invoice : _.pluck(invoices, 'invoceid')}, {status : 'deleted'}, function(err){
+        return res.send({success : true});
+      });
+    })
+  },
+
   ajaxUpdate : function(req, res){
 
     var invoiceId= req.body.quoteid;
@@ -212,7 +223,10 @@ module.exports = {
       invoiceLines : lines
     };
     Invoice.create(newInvoice, function(err, newInvoice){
-      if(err) sails.log.error('error generating quote : ', newInvoice)
+      if(err) {
+        sails.log.error('error generating quote : ', newInvoice)
+        sails.log.error('error : ', err);
+      }
       console.log('---- ', newInvoice);
       var modelLines = invoiceLines.map(function(n){
         return {
@@ -309,6 +323,36 @@ module.exports = {
         res.end(err);
       });
     });
+  },
+  convertToOrder : function(req, res){
+    var invoiceId = req.params.quoteid;
+    Invoice.update({invoceid : invoiceId}, {status : 'order'}, function(err, invoice){
+      res.redirect('/authenticated/allinvoices');
+    })
+  },
+  allQuotes : function(req, res){
+    Invoice.find({owner : req.user.id, status : 'quote'}).exec(function(err, invoices){
+      if(err) sails.log.error('err :' , err);
+      return res.render('./authenticated/facturen',{
+        displayName : req.user.displayName,
+        invoices : invoices,
+        formatDate : function(d){
+          return d.format('{dd}/{MM}/{yyyy}')
+        }
+      });
+    })
+  },
+  getAllOrders : function(req, res){
+    Invoice.find({owner : req.user.id, status : 'order'}).exec(function(err, invoices){
+      if(err) sails.log.error('err :' , err);
+      return res.render('./authenticated/facturen',{
+        displayName : req.user.displayName,
+        invoices : invoices,
+        formatDate : function(d){
+          return d.format('{dd}/{MM}/{yyyy}')
+        }
+      });
+    })
   }
 };
 

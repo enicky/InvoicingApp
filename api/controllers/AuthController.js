@@ -97,7 +97,7 @@ module.exports = {
    * @param {Object} res
    */
   callback: function(req, res) {
-    sails.log.debug('[AuthController:callback]');
+   // sails.log.debug('[AuthController:callback]');
     function tryAgain(err) {
 
       // Only certain error messages are returned via req.flash('error', someError)
@@ -129,7 +129,7 @@ module.exports = {
     }
 
     passport.callback(req, res, function(err, user) {
-      sails.log.debug('[AuthController:callback] passport.callback called : ', err, user);
+     // sails.log.debug('[AuthController:callback] passport.callback called : ', err, user);
       if (err) {
         return tryAgain();
       }

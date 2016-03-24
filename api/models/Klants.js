@@ -19,7 +19,15 @@ module.exports = {
       collection : 'invoice',
       via : 'customer'
     },
-    owner : { model : 'User'}
+    owner : { model : 'User'},
+    status :{
+      type : 'string',
+      enum: ['new', 'deleted'],
+      defaultsTo  : 'new'
+    }
+  },
+  afterDestroy : function(destroyedRecords, cb){
+    Invoice.destroy({customer : _.pluck(destroyedRecords, 'klantnummer')}).exec(cb);
   }
 };
 

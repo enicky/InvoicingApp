@@ -54,6 +54,8 @@ module.exports.routes = {
   'post /authenticated/klanten/edit' : 'KlantsController.postEdit',
   'get /authenticated/klanten/delete/:klantid' : 'KlantsController.delete',
 
+  'post /authenticated/klanten/ajax/delete' : 'KlantsController.ajaxdelete',
+
   'post /authenticated/klanten/ajax/new' : 'KlantsController.ajaxNew',
 
   //STOCK
@@ -73,15 +75,20 @@ module.exports.routes = {
   'get /authenticated/invoices/edit/:id' : 'InvoiceController.editInvoice',
 
   'get /authenticated/invoices/view/:id': 'InvoiceController.viewInvoice',
+  'post /authenticated/invoices/ajax/delete' : 'InvoiceController.ajaxDelete',
+
+  'get /authenticated/invoices' : 'InvoiceController.getAllOrders',
 
 
   //QUOTES
   'get /authenticated/quotes/new' :  'InvoiceController.newQuote',
   'post /authenticated/quotes/ajax/save' :  'InvoiceController.saveNewQuote',
   'post /authenticated/quotes/ajax/update' : 'InvoiceController.ajaxUpdate',
+  'get /authenticated/quotes' : 'InvoiceController.allQuotes',
+
 
   'get /authenticated/invoices/print/quote/:quoteid' : 'InvoiceController.printQuote',
-
+  'get /authenticated/invoices/convert/order/:quoteid' : 'InvoiceController.convertToOrder',
 
   //AUTH0 login
   'get /Auth0Login' : 'Auth0Controller.index'

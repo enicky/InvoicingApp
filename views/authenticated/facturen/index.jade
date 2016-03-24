@@ -10,6 +10,8 @@ block foot
   script(src="/js/plugins/dataTables/dataTables.bootstrap.js")
   script(src="/js/plugins/dataTables/dataTables.responsive.js")
   script(src='/js/pages/stock/index.js')
+  script(src='/js/pages/facturen/index.js')
+
 block content
   .row.wrapper.border-bottom.white-bg.page-heading
     .col-lg-10
@@ -69,7 +71,7 @@ block content
                         i.fa.fa-print
                       | &nbsp;
 
-                      a.btn.btn-danger.btn-sm(href='/authenticated/invoices/delete/#{item.invoceid}')
+                      a.btn.btn-danger.btn-sm(href='/authenticated/invoices/delete/#{item.invoceid}', name="btnDelete", data-id='#{item.invoceid}')
                         i.fa.fa-trash
 
 

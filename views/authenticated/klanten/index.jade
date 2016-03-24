@@ -55,6 +55,7 @@ block content
                   th Nummer
                   th Gemeente
                   th Belangrijk
+                  th Status
                   th Action
               tbody
                 each item in klanten
@@ -69,12 +70,13 @@ block content
                         i.fa.fa-check.text-navy
                       else
                         | &nbsp;
+                    td= item.status
                     td
                       a.btn.btn-white.btn-sm(href='/authenticated/klanten/edit/#{item.klantnummer}')
                         i.fa.fa-pencil
                         | &nbsp;Edit
                       | &nbsp;
-                      a.btn.btn-danger.btn-sm(href='/authenticated/klanten/delete/#{item.klantnummer}')
+                      a.btn.btn-danger.btn-sm(href='/authenticated/klanten/delete/#{item.klantnummer}', name="btnDelete", data-id='#{item.klantnummer}')
                         i.fa.fa-trash
                         | &nbsp;Delete
               tfoot
@@ -85,4 +87,5 @@ block content
                   th Nummer
                   th Gemeente
                   th Belangrijk
+                  th Status
                   th Action

@@ -14,7 +14,12 @@ module.exports = {
     prijs : {type : 'float'},
     aantal : {type : 'integer'},
     totaal : {type : 'float'},
-    owner : {model : 'User'}
+    owner : {model : 'User'},
+    status :{
+      type : 'string',
+      enum: ['new', 'deleted'],
+      defaultsTo  : 'new'
+    }
   }
 };
 

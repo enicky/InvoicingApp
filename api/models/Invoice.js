@@ -13,7 +13,8 @@ module.exports = {
     owner : { model : 'User'},
     status : {
       type : 'string',
-      enum : ['quote','invoice']
+      enum : ['new', 'quote','order', 'deleted'],
+      defaultsTo : 'quote'
     },
     title : { type : 'string'},
     betalingstermijn : { type : 'integer'},

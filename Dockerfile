@@ -11,9 +11,9 @@ VOLUME ["/server"]
 # Define working directory.
 WORKDIR /server
 
-COPY package.json /server
+ADD package.json /server/package.json
 
-RUN DEBIAN_FRONTEND=noninteractive JOBS=MAX npm install --unsafe-perm
+RUN cd /server && npm install
 
 COPY . /server
 

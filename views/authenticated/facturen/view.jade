@@ -26,6 +26,10 @@ block content
           i.fa.fa-check
           | &nbsp;Edit
         | &nbsp;
+        a#btnCreateInvoice.btn.btn-default(href='/authenticated/invoices/convert/order/#{invoice.invoceid}')
+          i.fa.fa-paper-plane
+          | &nbsp;Create Invoice
+        | &nbsp;
         a.btn.btn-primary(href='/authenticated/invoices/print/quote/#{invoice.invoceid}')
           i.fa.fa-print
           | &nbsp;Print
