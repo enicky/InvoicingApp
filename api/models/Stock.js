@@ -8,7 +8,7 @@
 module.exports = {
 
   attributes: {
-    stockid : {type: 'integer', autoIncrement : true },
+    stockid : {type: 'integer', primaryKey: true },
     artikelnummer : {type : 'string'},
     externArtikelNummer : {type : 'string'},
     name : 'string',
@@ -16,6 +16,17 @@ module.exports = {
     prijs : { type : 'float', defaultsTo : 0},
     beschrijving: {type : 'string'},
     owner : { model : 'User'}
+  },
+  beforeCreate : function(values, cb){
+    // add seq number, use
+    Sequence.next("stock", function(err, num) {
+
+      if (err) return cb(err);
+
+      values.stockid = num;
+
+      cb();
+    });
   }
 };
 

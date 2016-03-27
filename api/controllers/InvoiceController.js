@@ -23,16 +23,46 @@ module.exports = {
     })
   },
   viewInvoice : function(req, res){
+
     Invoice.find({owner:req.user.id, invoceid : req.params.id}).populate('customer').populate('invoiceLines').exec(function(err, invoices){
-      //sails.log.debug('Customer : ', invoices[0].customer);
+      sails.log.debug('[InvoiceController:viewInvoice] Invoice :', invoices);
       var targetJade = './authenticated/facturen/view';
-      res.view(targetJade, {
-        invoice : invoices[0],
-        klant : invoices[0].customer,
-        formatDate : function(d){
-          return d.format('{dd}/{MM}/{yyyy}')
-        }
-      });
+      this.p;
+      var that = this;
+      Stock.find({}).exec(function(err, products){
+        that.p = products
+        res.view(targetJade, {
+          invoice : invoices[0],
+          klant : invoices[0].customer,
+          formatDate : function(d){
+            return d.format('{dd}/{MM}/{yyyy}')
+          },
+          getProduct : function(productid){
+            sails.log.debug('[InvoiceController:viewInvoice:getProduct] by id : ', productid);
+            Stock.findOne({stockid : productid}).exec(function(err, product){
+              return product
+            })
+          },
+          getProductDescription : function(productid){
+            var pp = that.p.find(function(n){
+              return n.stockid == productid;
+            });
+            return pp.beschrijving;
+
+          },
+          getTax : function(aantal, prijs){
+            var dec = 0.21 * (aantal * 1.0) * (prijs * 1.0);
+            return dec.round(2);
+          },
+          getArtikelNummer : function(productid){
+            var pp = that.p.find(function(n){
+              return n.stockid == productid;
+            });
+            return pp.artikelnummer;
+          }
+        });
+      })
+
     })
   },
   deleteInvoice : function(req, res){
@@ -98,7 +128,7 @@ module.exports = {
         prijs : parseFloat(n.prijs),
         aantal : parseInt(n.aantal),
         totaal : parseFloat(n.totaal),
-        product : n.product
+        product : parseInt(n.product)
       };
     });
 
@@ -122,13 +152,13 @@ module.exports = {
 
     InvoiceLine.destroy({owner : req.user.id, invoice : invoiceId}).exec(function(err, destroyedInvoiceLines){
       if(err) sails.log.error('error deleteing invoicelines ... ', err);
-      sails.log.debug('Deleted InvoiceLines');
-      Invoice.update({id : invoiceId}, newInvoice).exec(function(errInvoice, updatedInvoice){
+      sails.log.debug('[InvoiceController:ajaxUpdate] Deleted InvoiceLines ');
+      Invoice.update({invoceid : invoiceId}, newInvoice).exec(function(errInvoice, updatedInvoice){
         if(errInvoice) sails.log.error('Error updating new invoice ... ', errInvoice);
-        sails.log.debug('Updated new Invoice : ', updatedInvoice);
+        sails.log.debug('[InvoiceController:ajaxUpdate] Updated new Invoice : ', updatedInvoice);
         InvoiceLine.destroy({'invoice' : null}).exec(function(err, destroyedLines){
           if(err) sails.log.error('error destroying empty lines ', err);
-          sails.log.debug('cleaned up orphaned invoiceLines : ', destroyedLines.length);
+          sails.log.debug('[InvoiceController:ajaxUpdate] cleaned up orphaned invoiceLines : ', destroyedLines.length);
           return res.send({
             "success": true,
             "invoice": newInvoice
@@ -268,7 +298,9 @@ module.exports = {
     var formatted = vandaag.format('{dd}/{MM}/{yyyy}');
 
     Klants.find({owner : req.user.id}).exec(function(err, klanten) {
-      Stock.find({}).exec(function(errStock, stock) {
+      if(err) sails.log.error('Error finding klkasnt : ', err);
+      Stock.find({owner : req.user.id}).exec(function(errStock, stock) {
+        if(errStock) sails.log.error('error finding stock : ', errStock);
         Invoice.findOne({owner: req.user.id, invoceid: invoiceId}).populate('invoiceLines').exec(function (err, invoice) {
           vandaag = invoice.factuurdatum;
           formatted = vandaag.format('{dd}/{MM}/{yyyy}');
@@ -277,7 +309,7 @@ module.exports = {
 
 
           if (err) sails.log.error('Error Get Invoice : ', err);
-          //sails.log.debug('found invoice : ', invoice);
+          sails.log.debug('found invoice : ', invoice);
           var targetJade = './authenticated/facturen/editQuote';
           switch (invoice.status) {
             case 'invoice' :

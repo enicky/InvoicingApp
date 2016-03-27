@@ -54,6 +54,10 @@ module.exports.http = {
   *                                                                           *
   ****************************************************************************/
 
+  myDisplayName : function(req, res, next){
+    console.log('username : ', req.user.displayName);
+    return next();
+  }
     // myRequestLogger: function (req, res, next) {
     //     console.log("Requested :: ", req.method, req.url);
     //     return next();

@@ -49,7 +49,9 @@ block content
             table.table.table-striped.table-bordered.table-hover.dataTables-example
               thead
                 tr
-                  th Artikelnummer
+                  th Id
+                  th Art#
+                  th Ext. Art#
                   th Naam
                   th Beschrijving
                   th In Stock
@@ -59,6 +61,8 @@ block content
                 each item in stock
                   tr
                     td= item.stockid
+                    td= item.artikelnummer
+                    td= item.externArtikelNummer
                     td= item.name
                     td= item.beschrijving
                     td= item.stock
@@ -73,7 +77,9 @@ block content
                         | &nbsp;Delete
               tfoot
                 tr
-                  th Artikelnummer
+                  th Id
+                  th Art#
+                  th Ext. Art#
                   th Naam
                   th Beschrijving
                   th In Stock

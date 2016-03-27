@@ -12,24 +12,32 @@ block foot
 block content
   .row.wrapper.border-bottom.white-bg.page-heading
     .col-lg-8
-      h2 Offerte #{invoice.invoceid}
+      if(invoice.status =='quote')
+        h2 Offerte #{invoice.invoceid}
+      if(invoice.status =='order')
+        h2 Order #{invoice.invoceid}
       ol.breadcrumb
         li
           a(href='/authenticated/index') Home
         li
           a(href='/authenticated/allinvoices') Invoices
-        li.active
-          strong Invoice
-    .col-lg-4
+        if(invoice.status == 'order')
+          li.active
+            strong Invoice
+        if(invoice.status == 'quote')
+          li.active
+            strong Quote
+    .col-lg-4.col-md-6.col-xs-12
       .title-action
-        a#btnEdit.btn.btn-white
-          i.fa.fa-check
-          | &nbsp;Edit
-        | &nbsp;
-        a#btnCreateInvoice.btn.btn-default(href='/authenticated/invoices/convert/order/#{invoice.invoceid}')
-          i.fa.fa-paper-plane
-          | &nbsp;Create Invoice
-        | &nbsp;
+        if(invoice.status == 'quote')
+          a#btnEdit.btn.btn-white(href='/authenticated/invoices/edit/#{invoice.invoceid}')
+            i.fa.fa-check
+            | &nbsp;Edit
+          | &nbsp;
+          a#btnCreateInvoice.btn.btn-default(href='/authenticated/invoices/convert/order/#{invoice.invoceid}')
+            i.fa.fa-paper-plane
+            | &nbsp;Create Invoice
+          | &nbsp;
         a.btn.btn-primary(href='/authenticated/invoices/print/quote/#{invoice.invoceid}')
           i.fa.fa-print
           | &nbsp;Print
@@ -69,18 +77,20 @@ block content
             table.table.invoice-table
               thead
                 tr
-                  th Item List
-                  th Quantity
+                  th Item
+                  th Beschrijving
+                  th Aantal
                   th Unit Price
                   th Tax
                   th Total Price
               tbody
                 each lijn in invoice.invoiceLines
                   tr
-                    td #{lijn.product}
+                    td #{getArtikelNummer(lijn.product)}
+                    td #{getProductDescription(lijn.product)}
                     td #{lijn.aantal}
                     td #{lijn.prijs}
-                    td
+                    td #{getTax(lijn.aantal, lijn.prijs)}
                     td #{lijn.totaal}
             table.table.invoice-total
               tbody
@@ -97,7 +107,8 @@ block content
                     strong TOTAL:
                   td #{invoice.totaal}
             .text-right
-              a.btn.btn-primary
-                i.fa.fa-euro
-                | &nbsp;Make a Payment
+              if(invoice.status == 'order')
+                a.btn.btn-primary
+                  i.fa.fa-euro
+                  | &nbsp;Make a Payment
 

@@ -8,7 +8,9 @@
 module.exports = {
 
   attributes: {
-    klantnummer : {type: 'integer', autoIncrement : true },
+    klantnummer : {type: 'integer',
+      primaryKey: true,
+    },
     naam : {type : 'string'},
     straat : {type : 'string'},
     nummer : {type : 'string'},
@@ -28,6 +30,17 @@ module.exports = {
   },
   afterDestroy : function(destroyedRecords, cb){
     Invoice.destroy({customer : _.pluck(destroyedRecords, 'klantnummer')}).exec(cb);
+  },
+  beforeCreate : function(values, cb){
+    // add seq number, use
+    Sequence.next("klant", function(err, num) {
+
+      if (err) return cb(err);
+
+      values.klantnummer = num;
+
+      cb();
+    });
   }
 };
 

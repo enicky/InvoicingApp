@@ -6,12 +6,12 @@ RUN npm install -g sails grunt bower npm-check-updates
 RUN mkdir /server
 
 # Define mountable directories.
-VOLUME ["/server"]
+#VOLUME ["/server"]
 
 # Define working directory.
 WORKDIR /server
 
-ADD package.json /server/package.json
+COPY package.json /server/package.json
 
 RUN cd /server && npm install
 

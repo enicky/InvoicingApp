@@ -8,7 +8,7 @@
 module.exports = {
 
   attributes: {
-    invoiceLineId : {type: 'integer', autoIncrement : true },
+    invoiceLineId : {type: 'integer', primaryKey: true},
     invoice : {model : 'Invoice'},
     product : { model : 'Stock'},
     prijs : {type : 'float'},
@@ -20,6 +20,17 @@ module.exports = {
       enum: ['new', 'deleted'],
       defaultsTo  : 'new'
     }
+  },
+  beforeCreate : function(values, cb){
+    // add seq number, use
+    Sequence.next("invoiceline", function(err, num) {
+
+      if (err) return cb(err);
+
+      values.invoiceLineId = num;
+
+      cb();
+    });
   }
 };
 

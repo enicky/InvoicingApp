@@ -36,7 +36,7 @@ block content
           h5 Nieuwe Offerte
         .ibox-content
           form.form-horizontal(method='POST', action='/authenticated/facturen/newQuote')
-            .col-lg-4
+            .col-lg-6.col-md-6.col-xs-12
               .form-group
                 label.col-lg-2.control-label Naam
                 .col-lg-10
@@ -44,7 +44,7 @@ block content
               .form-group
                 label.col-lg-2.control-label Klant
                 .col-lg-10
-                  select#klant(data-placeholder='kies klant', class='chosen-select', style='width:350px', name='klant') &nbsp;
+                  select#klant(data-placeholder='kies klant', class='chosen-select', style='width:280px', name='klant') &nbsp;
                     option
                     //fixed line
                     each item in klanten
@@ -52,30 +52,32 @@ block content
                   | &nbsp;
                   btn.btn.btn-sm.btn-default(type="button", data-toggle="modal", data-target="#newKlant")
                     i.fa.fa-plus &nbsp;
-            .col-lg-3
+            .col-lg-6
               .form-group
-                label.col-lg-2.control-label Address
-                .col-lg-10
-                  textarea.form-control(name="address", placeholder="address")
-            .col-lg-4
-              .form-group
-                label.col-lg-3.control-label Betalingstermijn
-                select#betalingstermijn(data-placeholder="betalingstermijn", class="chosen-select", style="width:350px;", name="betalingstermijn")
+                label.col-lg-4.control-label Betalingstermijn
+                select#betalingstermijn(data-placeholder="betalingstermijn", class="chosen-select", style="width:280px;", name="betalingstermijn")
                   option(value="7") 7 dagen
                   option(value="30") 30 dagen
                   option(value="60") 60 dagen
               .form-group#data_1
-                label.col-lg-3.control-label Factuurdatum
+                label.col-lg-4.control-label Factuurdatum
                 .input-group.date
                   span.input-group-addon
                     i.fa.fa-calendar
                   input.form-control(type='text', value='#{today}', name='factuurdatum')
               .form-group#data_betaaldatum
-                label.col-lg-3.control-label Betaaldatum
+                label.col-lg-4.control-label Betaaldatum
                 .input-group.date
                   span.input-group-addon
                     i.fa.fa-calendar
                   input.form-control(type='text', value='#{due}', name="betaaldatum")
+            .clearfix
+            .col-lg-6
+              .form-group
+                label.col-lg-2.control-label Address
+                .col-lg-10
+                  textarea.form-control(name="address", placeholder="address")
+
           .clearfix
   .row.wrapper.wrapper-content.animated.fadeInRight
     .col-lg-12
@@ -104,7 +106,7 @@ block content
                       select.product(data-placeholder='kies product', style='width:350px', name='product', data-rownum="1") &nbsp;
                         option
                         each item in producten
-                          option(value='#{item.id}', data-prijs='#{item.prijs}', data-id='#{item.artikelnummer}', data-description='#{item.beschrijving}') #{item.name}
+                          option(value='#{item.stockid}', data-prijs='#{item.prijs}', data-id='#{item.artikelnummer}', data-description='#{item.beschrijving}') #{item.name}
                       | &nbsp;
                       btn.btn.btn-sm.btn-default(type="button", data-modaltype="article", data-target="#newArtikel", data-rownum="1")
                         i.fa.fa-plus &nbsp;
@@ -126,7 +128,7 @@ block content
                       select.product(data-placeholder='kies product', style='width:350px', name='product', data-rownum="2") &nbsp;
                         option
                         each item in producten
-                          option(value='#{item.id}', data-prijs='#{item.prijs}', data-id='#{item.artikelnummer}', data-description='#{item.beschrijving}') #{item.name}
+                          option(value='#{item.stockid}', data-prijs='#{item.prijs}', data-id='#{item.artikelnummer}', data-description='#{item.beschrijving}') #{item.name}
                       | &nbsp;
                       btn.btn.btn-sm.btn-default(type="button",  data-modaltype="article", data-target="#newArtikel", data-rownum="2")
                         i.fa.fa-plus &nbsp;

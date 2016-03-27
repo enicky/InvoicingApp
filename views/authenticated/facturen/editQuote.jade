@@ -11,7 +11,7 @@ block foot
 
 block content
   .row.wrapper.border-bottom.white-bg.page-heading
-    .col-lg-10
+    .col-lg-9
       h2 Nieuwe Offerte
       ol.breadcrumb
         li
@@ -20,7 +20,7 @@ block content
           a(href='/authenticated/allinvoices') Offertes
         li.active
           strong Nieuwe Offerte
-    .col-lg-2
+    .col-lg-3
       .title-action
         a#btnSaveQuote.btn.btn-white
           i.fa.fa-check
@@ -39,7 +39,7 @@ block content
             input(type='hidden', value='#{invoice.invoceid}', name='hdnInvoiceId')
             input(type='hidden', value='#{invoice.customer}', name='hdnKlantId')
             input(type='hidden', value='#{JSON.stringify(invoice.invoiceLines)}', name='hdnInvoiceLines')
-            .col-lg-4
+            .col-lg-6.col-md-6.col-xs-12
               .form-group
                 label.col-lg-2.control-label Naam
                 .col-lg-10
@@ -47,7 +47,7 @@ block content
               .form-group
                 label.col-lg-2.control-label Klant
                 .col-lg-10
-                  select#klant(data-placeholder='kies klant', class='chosen-select', style='width:350px', name='klant') &nbsp;
+                  select#klant(data-placeholder='kies klant', class='chosen-select', style='width:280px', name='klant') &nbsp;
                     each item in klanten
                       -if(item.klantnummer == invoice.customer)
                         option(value='#{item.klantnummer}' selected) #{item.naam}
@@ -56,30 +56,32 @@ block content
                   | &nbsp;
                   btn.btn.btn-sm.btn-default(type="button", data-toggle="modal", data-target="#newKlant")
                     i.fa.fa-plus &nbsp;
-            .col-lg-3
+
+            .col-lg-6
               .form-group
-                label.col-lg-2.control-label Address
-                .col-lg-10
-                  textarea.form-control(name="address", placeholder="address")
-            .col-lg-4
-              .form-group
-                label.col-lg-3.control-label Betalingstermijn
-                select#betalingstermijn(data-placeholder="betalingstermijn", class="chosen-select", style="width:350px;", name="betalingstermijn", data-val="#{invoice.betalingstermijn}")
+                label.col-lg-4.control-label Betalingstermijn
+                select#betalingstermijn(data-placeholder="betalingstermijn", class="chosen-select", style="width:280px;", name="betalingstermijn", data-val="#{invoice.betalingstermijn}")
                   option(value="7") 7 dagen
                   option(value="30") 30 dagen
                   option(value="60") 60 dagen
               .form-group#data_1
-                label.col-lg-3.control-label Factuurdatum
+                label.col-lg-4.control-label Factuurdatum
                 .input-group.date
                   span.input-group-addon
                     i.fa.fa-calendar
                   input.form-control(type='text', value='#{today}', name='factuurdatum')
               .form-group#data_betaaldatum
-                label.col-lg-3.control-label Betaaldatum
+                label.col-lg-4.control-label Betaaldatum
                 .input-group.date
                   span.input-group-addon
                     i.fa.fa-calendar
                   input.form-control(type='text', value='#{due}', name="betaaldatum")
+            .col-lg-6
+              .form-group
+                label.col-lg-2.control-label Address
+                .col-lg-10
+                  textarea.form-control(name="address", placeholder="address")
+
           .clearfix
   .row.wrapper.wrapper-content.animated.fadeInRight
     .col-lg-12
@@ -105,7 +107,7 @@ block content
                       a.btn.btn-sm.btn-danger(name='btnDelete')
                         i.fa.fa-trash &nbsp;
                     td
-                      select.product(data-placeholder='kies product', style='width:350px', name='product', data-rownum="1", value="") &nbsp;
+                      select.product(data-placeholder='kies product', style='width:300px', name='product', data-rownum="1", value="") &nbsp;
                         option
                         each item in producten
                           option(value='#{item.stockid}', data-prijs='#{item.prijs}', data-id='#{item.stockid}', data-description='#{item.beschrijving}') #{item.name}

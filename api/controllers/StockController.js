@@ -23,13 +23,22 @@ module.exports = {
   postNewStock : function(req, res){
     var name = req.body.naam;
     var stock = req.body.stock;
-    var beschrijving= req.body.beschrijving;;
+    var beschrijving= req.body.beschrijving;
+    var prijs = req.body.prijs;
+    if(typeof(prijs) == "undefined" || prijs == null) prijs = 0;
+
+    var artikelnummer = req.body.artikelnummer;
+    var externartikelnummer = req.body.externartikelnummer;
+
 
     var newArticle = {
       name : name,
       stock : stock,
       beschrijving : beschrijving,
-      owner : req.user.id
+      prijs : parseFloat(prijs),
+      owner : req.user.id,
+      artikelnummer : artikelnummer,
+      externArtikelNummer : externartikelnummer
     };
     Stock.create(newArticle, function(err, newArticle){
       return res.redirect('/authenticated/stock');
