@@ -2,6 +2,8 @@ FROM node:0.12-slim
 
 MAINTAINER Markus Padourek <markus@artificial.io>
 
+RUN apt-get install -y python2.7 python2.7-dev
+
 RUN npm install -g sails grunt bower npm-check-updates
 RUN mkdir /server
 
