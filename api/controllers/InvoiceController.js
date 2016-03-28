@@ -240,7 +240,9 @@ module.exports = {
       return n.product;
     });
 
+    var hdnAddressId = req.body.hdnAddressId;
 
+    sails.log.debug('[InvoiceController:saveNewQuote] hdnAddressId : ', hdnAddressId);
 
     var newInvoice = {
       title : title,
@@ -254,7 +256,8 @@ module.exports = {
       subTotaal : subTotaal,
       btwTotaal : btwTotaal,
       totaal : totaal,
-      invoiceLines : lines
+      invoiceLines : lines,
+      customerAddress : hdnAddressId
     };
     Invoice.create(newInvoice, function(err, newInvoice){
       if(err) {

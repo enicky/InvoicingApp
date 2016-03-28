@@ -36,6 +36,7 @@ block content
           h5 Nieuwe Offerte
         .ibox-content
           form.form-horizontal(method='POST', action='/authenticated/facturen/newQuote')
+            input(type='hidden', name='hdnAddressId', id="hdnAddressId")
             .col-lg-6.col-md-6.col-xs-12
               .form-group
                 label.col-lg-2.control-label Naam

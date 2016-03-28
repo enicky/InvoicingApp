@@ -24,6 +24,7 @@ $(function(){
       v = vv[0];
       that.usedDifferentAddress = true;
       that.customerAddressIdToFind = vv[1];
+      $('[name="hdnAddressId"]').val(that.customerAddressIdToFind);
     }
     var targetUrl = '/Klants/' + v;
     $.getJSON(targetUrl, function(data){

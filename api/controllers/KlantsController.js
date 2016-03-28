@@ -43,7 +43,19 @@ module.exports = {
       owner : req.user.id
     };
     Klants.create(newKlant).exec(function(err, created){
-      return res.redirect('/authenticated/klanten');
+      var newCustomerAddress= {
+        customer : created.klantnummer,
+        street : straat,
+        number : nummer,
+        postalcode : postcode,
+        city : gemeente,
+        typeAddress : 'invoicing',
+        owner : req.user.id
+      }
+      CustomerAddress.create(newCustomerAddress).exec(function(err, createdAddress){
+        return res.redirect('/authenticated/klanten');
+      })
+
     })
   },
   edit : function(req, res){
