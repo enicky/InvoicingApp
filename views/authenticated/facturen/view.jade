@@ -86,7 +86,7 @@ block content
               tbody
                 each lijn in invoice.invoiceLines
                   tr
-                    td #{getArtikelNummer(lijn.product)}
+                    td #{getArtikelNummer(lijn.product, invoice.customer.useExternalArticleNumber)}
                     td #{getProductDescription(lijn.product)}
                     td #{lijn.aantal}
                     td #{lijn.prijs}

@@ -83,22 +83,16 @@ block content
                 h5 Openstaande facturen
                 span.label.label-danger.pull-right Facturen
               .ibox-content
-                div
-                  .pull-right.text-right
-                    small.font-bold.text-danger € 2.221,45
-                  h4
-                    | Factuur 2416 (Nicky Eichmann)
-                    br
-                    small.m-r
-                      a(href='graph²_flot.html')  Open Factuur
-                div
-                  .pull-right.text-right
-                    small.font-bold.text-danger € 232,45
-                  h4
-                    | Factuur 212 (Georgy Guglielmini)
-                    br
-                    small.m-r
-                      a(href='graph²_flot.html')  Open Factuur
+                for item in invoices
+                  div
+                    .pull-right.text-right
+                      small.font-bold.text-danger € #{item.totaal}
+                    h4
+                      | Factuur #{item.invoceid} (#{item.customer.naam})
+                      br
+                      small.m-r
+                        a(href='/authenticated/invoices/view/#{item.invoceid}') Open Factuur
+
                 a.btn.btn-primary.btn-block.m-t(href='/authenticated/allinvoices')
                   i.fa.fa-arrow-down
                   | &nbsp;Toon Alle Facturen

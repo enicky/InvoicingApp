@@ -48,7 +48,11 @@ block content
                     option
                     //fixed line
                     each item in klanten
-                      option(value='#{item.klantnummer}') #{item.naam}
+                      - if(item.customerAddress.length > 0)
+                        each item2 in item.customerAddress
+                          option(value='#{item.klantnummer}-#{item2.customerAddressId}') #{item.naam} #{item2.typeAddress}
+                      -else
+                        option(value='#{item.klantnummer}') #{item.naam}
                   | &nbsp;
                   btn.btn.btn-sm.btn-default(type="button", data-toggle="modal", data-target="#newKlant")
                     i.fa.fa-plus &nbsp;

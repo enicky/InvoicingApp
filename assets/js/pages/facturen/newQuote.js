@@ -15,10 +15,29 @@ $(function(){
   $('[name="klant"]').select2().on("change", function(ee) {
     // mostly used event, fired to the original element when the value changes
     var e = $(this);
-    var targetUrl = '/Klants/' + e.val();
+    var that = this;
+    that.usedDifferentAddress = false;
+    var value = e.val();
+    var v = Object.clone(value);
+    if(value.indexOf('-') >= 0){
+      var vv = value.split('-');
+      v = vv[0];
+      that.usedDifferentAddress = true;
+      that.customerAddressIdToFind = vv[1];
+    }
+    var targetUrl = '/Klants/' + v;
     $.getJSON(targetUrl, function(data){
-      var adres = "" + data.straat + " " + data.nummer + "\n" + data.postcode + " " + data.gemeente;
-      $('[name="address"]').val(adres).prop("disabled", true);
+      if(!that.usedDifferentAddress){
+        var adres = "" + data.straat + " " + data.nummer + "\n" + data.postcode + " " + data.gemeente;
+        $('[name="address"]').val(adres).prop("disabled", true);
+      }else{
+        var customerAddresses = data.customerAddress;
+        var address = customerAddresses.find(function(n){
+          return n.customerAddressId == that.customerAddressIdToFind;
+        })
+        var adres = "" + address.street + " " + address.number + "\n" + address.postalcode + " " + address.city;
+        $('[name="address"]').val(adres).prop("disabled", true);
+      }
 
     });
   });

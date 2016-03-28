@@ -54,11 +54,14 @@ module.exports = {
             var dec = 0.21 * (aantal * 1.0) * (prijs * 1.0);
             return dec.round(2);
           },
-          getArtikelNummer : function(productid){
+          getArtikelNummer : function(productid, useExternalArticleNumber){
             var pp = that.p.find(function(n){
               return n.stockid == productid;
             });
-            return pp.artikelnummer;
+            if(!useExternalArticleNumber)
+              return pp.artikelnummer;
+            else
+              return pp.externArtikelNummer;
           }
         });
       })
@@ -84,7 +87,8 @@ module.exports = {
 
 
     var formatted = vandaag.format('{dd}/{MM}/{yyyy}');
-    Klants.find({owner : req.user.id}).exec(function(err, klanten){
+    Klants.find({owner : req.user.id}).populate('customerAddress').exec(function(err, klanten){
+      sails.log.debug('Customer : ', klanten);
       Stock.find({}).exec(function(errStock, stock){
         if(errStock) sails.log.error('Error Getting Stock : ', errStock);
         return res.render('./authenticated/facturen/newQuote',{

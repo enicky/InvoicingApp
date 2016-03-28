@@ -10,6 +10,7 @@ module.exports = {
   attributes: {
     invoceid : {type: 'integer', primaryKey: true},
     customer : {model : 'Klants'},
+    customerAddress : {model : 'CustomerAddress'},
     owner : { model : 'User'},
     status : {
       type : 'string',

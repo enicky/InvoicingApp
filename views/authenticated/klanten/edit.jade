@@ -2,95 +2,135 @@
 extends ../layout
 block head
 block foot
-	script(src='/js/pages/klanten/edit.js')
+  script(src='/js/pages/klanten/edit.js')
 block content
-	.row.wrapper.border-bottom.white-bg.page-heading
-		.col-lg-10
-			h2 Data Tables
-			ol.breadcrumb
-				li
-					a(href='/authenticated/index') Home
-				li
-					a Klanten
-				li.active
-					strong Nieuwe klant
-		.col-lg-2
-	.row.wrapper.wrapper-content.animated.fadeInRight
-		.col-lg-5
-			.ibox.float-e-margins
-				.ibox-title
-					h5 Edit Klant
-					.ibox-tools
-						a.collapse-link
-							i.fa.fa-chevron-up
-						a.dropdown-toggle(href='#', data-toggle='dropdown')
-							i.fa.fa-wrench
-						ul.dropdown-menu.dropdown-user
-							li
-								a(href='#') Config option 1
-							li
-								a(href='#') Config option 2
-						a.close-link
-							i.fa.fa-times
-				.ibox-content
-					form.form-horizontal(method='POST', action='/authenticated/klanten/edit')
-						input(type='hidden', name='klantid', value='#{klant.klantnummer}')
-						.form-group
-							label.col-lg-2.control-label Naam
-							.col-lg-10
-								input.form-control(type='text', placeholder='Naam', name='naam', value='#{klant.naam}')
-						.form-group
-							label.col-lg-2.control-label Straat
-							.col-lg-10
-								input.form-control(type='text', placeholder='Straat', name='straat', value='#{klant.straat}')
-						.form-group
-							label.col-lg-2.control-label Nummer
-							.col-lg-10
-								input.form-control(type='text', placeholder='Nummer', name='nummer', value='#{klant.nummer}')
-						.form-group
-							label.col-lg-2.control-label Gemeente
-							.col-lg-10
-								input.form-control(type='text', placeholder='Gemeente', name='gemeente', value='#{klant.gemeente}')
-						.form-group
-							label.col-lg-2.control-label Postcode
-							.col-lg-10
-								input.form-control(type='text', placeholder='Postcode', name='postcode', value='#{klant.postcode}')
-						.form-group
-							label.col-lg-2.control-label Belangrijk
-							.col-sm-10
-								.checkbox
-									label
-										-if(klant.important)
-											input(type='checkbox', name='belangrijk', checked='checked')
-										-else
-											input(type='checkbox', name='belangrijk')
-						.form-group
-							.col-lg-offset-2.col-lg-10
-								button.btn.btn-sm.btn-white(type='submit') Sla Op
-								| &nbsp;
-								a.btn.btn-sm.btn-danger(href='/authenticated/klanten') Ga terug
-		.col-lg-5
-			.ibox.float-e-margins
-				.ibox-title
-					h5 Extra adressen
-				.ibox-content
-					form.form-horizontal(method='POST', action='/authenticated/klanten/new')
-						.form-group
-							label.col-lg-2.control-label Straat
-							.col-lg-10
-								input.form-control(type='text', placeholder='Straat', name='straat', value='#{klant.straat}')
-						.form-group
-							label.col-lg-2.control-label Nummer
-							.col-lg-10
-								input.form-control(type='text', placeholder='Nummer', name='nummer', value='#{klant.nummer}')
-						.form-group
-							label.col-lg-2.control-label Gemeente
-							.col-lg-10
-								input.form-control(type='text', placeholder='Gemeente', name='gemeente', value='#{klant.gemeente}')
-						.form-group
-							label.col-lg-2.control-label Postcode
-							.col-lg-10
-								input.form-control(type='text', placeholder='Postcode', name='postcode', value='#{klant.postcode}')
-						.form-group
-							.col-lg-offset-2.col-lg-10
-								button.btn.btn-sm.btn-white(type='submit') Voeg Toe
+  .row.wrapper.border-bottom.white-bg.page-heading
+    .col-lg-10
+      h2 Data Tables
+      ol.breadcrumb
+        li
+          a(href='/authenticated/index') Home
+        li
+          a Klanten
+        li.active
+          strong Nieuwe klant
+    .col-lg-2
+  .row.wrapper.wrapper-content.animated.fadeInRight
+    .col-log-12
+      .tabs-container
+        ul.nav.nav-tabs
+          li.active
+            a(data-toggle='tab', href='#tab1', aria-expanded=true) Klant
+          li
+            a(data-toggle='tab', href='#tab2', aria-expanded=false) Extra Adressen
+          li
+            a(data-toggle='tab', href='#tab3', aria-expanded=false) Extra Info
+        .tab-content
+          div#tab1.tab-pane.active
+            .panel-body
+              form.form-horizontal(method='POST', action='/authenticated/klanten/edit')
+                input(type='hidden', name='klantid', value='#{klant.klantnummer}')
+                .form-group
+                  label.col-lg-2.control-label Naam
+                  .col-lg-10
+                    input.form-control(type='text', placeholder='Naam', name='naam', value='#{klant.naam}')
+                .form-group
+                  label.col-lg-2.control-label Straat
+                  .col-lg-10
+                    input.form-control(type='text', placeholder='Straat', name='straat', value='#{klant.straat}')
+                .form-group
+                  label.col-lg-2.control-label Nummer
+                  .col-lg-10
+                    input.form-control(type='text', placeholder='Nummer', name='nummer', value='#{klant.nummer}')
+                .form-group
+                  label.col-lg-2.control-label Gemeente
+                  .col-lg-10
+                    input.form-control(type='text', placeholder='Gemeente', name='gemeente', value='#{klant.gemeente}')
+                .form-group
+                  label.col-lg-2.control-label Postcode
+                  .col-lg-10
+                    input.form-control(type='text', placeholder='Postcode', name='postcode', value='#{klant.postcode}')
+                .form-group
+                  label.col-lg-2.control-label Belangrijk
+                  .col-sm-10
+                    .checkbox
+                      label
+                        -if(klant.important)
+                          input(type='checkbox', name='belangrijk', checked='checked')
+                        -else
+                          input(type='checkbox', name='belangrijk')
+                .form-group
+                  .col-lg-offset-2.col-lg-10
+                    button.btn.btn-sm.btn-white(type='submit') Sla Op
+                    | &nbsp;
+                    a.btn.btn-sm.btn-danger(href='/authenticated/klanten') Ga terug
+          div#tab2.tab-pane
+            .panel-body
+              table.table.table-striped.table-bordered.table-hover.dataTables-example
+                thead
+                  tr
+                    th Straat
+                    th Nummer
+                    th Postcode
+                    th Gemeente
+                    th Type
+                    th &nbsp;
+                tbody
+                  each item in customerAddresses
+                    tr
+                      td= item.street
+                      td= item.number
+                      td= item.postalcode
+                      td= item.city
+                      td= item.typeAddress
+                      td
+                        a.btn.btn-sm.btn-danger(href='/authenticated/customer', name="btnDeleteCustomerAddress", data-id='#{item.customerAddressId}')
+                          i.fa.fa-trash
+                          | &nbsp;Delete
+                tfoot
+                  tr
+                    th Straat
+                    th Nummer
+                    th Postcode
+                    th Gemeente
+                    th Type
+                    th &nbsp;
+              form.form-horizontal(method='POST', action='/authenticated/klanten/#{klant.klantnummer}/address/add')
+                .form-group
+                  label.col-lg-2.control-label Straat
+                  .col-lg-10
+                    input.form-control(type='text', placeholder='Straat', name='straat')
+                .form-group
+                  label.col-lg-2.control-label Nummer
+                  .col-lg-10
+                    input.form-control(type='text', placeholder='Nummer', name='nummer')
+                .form-group
+                  label.col-lg-2.control-label Gemeente
+                  .col-lg-10
+                    input.form-control(type='text', placeholder='Gemeente', name='gemeente')
+                .form-group
+                  label.col-lg-2.control-label Postcode
+                  .col-lg-10
+                    input.form-control(type='text', placeholder='Postcode', name='postcode')
+                .form-group
+                  label.col-lg-2.control-label Adres type
+                  .col-lg-10
+                    select#addresstype(data-placeholder='addresstype', class='chosen-select', style="width:280px;", name="addresstype")
+                      option(value='invoicing') Invoicing
+                      option(value='shipping') Shipping
+                .form-group
+                  .col-lg-offset-2.col-lg-10
+                    button.btn.btn-sm.btn-white(type='submit') Voeg Toe
+          div#tab3.tab-pane
+            .panel-body
+              form.form-horizontal(method='post', action='/authenticated/klanten/extra')
+                .form-group
+                  label.col-lg-3.control-label Gebruik Extern Artikelnummer
+                  .col-sm-8
+                    .checkbox
+                      label
+                        -if(klant.useExternalArticleNumber)
+                          input(type='checkbox', name='useExternalArticleNumber', checked='checked')
+                        -else
+                          input(type='checkbox', name='useExternalArticleNumber')
+

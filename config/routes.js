@@ -54,6 +54,11 @@ module.exports.routes = {
   'post /authenticated/klanten/edit' : 'KlantsController.postEdit',
   'get /authenticated/klanten/delete/:klantid' : 'KlantsController.delete',
 
+  'post /authenticated/klanten/edit/useExternalArticleNumber' : 'KlantsController.useExternalArticleNumber',
+  'post /authenticated/klanten/:klantid/address/add': 'KlantsController.editCustomerAddAddress',
+
+  'post /authenticated/klanten/:klantid/address/delete/:customerAddressId' : 'KlantsController.deleteCustomerAddress',
+
   'post /authenticated/klanten/ajax/delete' : 'KlantsController.ajaxdelete',
 
   'post /authenticated/klanten/ajax/new' : 'KlantsController.ajaxNew',

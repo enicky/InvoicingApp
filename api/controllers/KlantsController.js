@@ -47,12 +47,19 @@ module.exports = {
     })
   },
   edit : function(req, res){
-    var klantnunmmer = req.params.klantid;
-    Klants.findOne({klantnummer : klantnunmmer}).exec(function(err, klant){
-      res.render('./authenticated/klanten/edit',{
-        displayName : req.user.displayName,
-        klant : klant
-      });
+    this.klantnunmmer = req.params.klantid;
+    var that = this;
+    //sails.log.debug("[KlantsController:edit] Get Klant ... ", that.klantnunmmer);
+    Klants.findOne({klantnummer : that.klantnunmmer}).exec(function(err, klant){
+      //sails.log.debug('klantnaummer : ', that.klantnunmmer);
+      CustomerAddress.find({customer : klant.klantnummer}).exec(function(err, addresses){
+        //sails.log.debug('[KlantsController:edit] found customeradress ...', err, addresses);
+        res.render('./authenticated/klanten/edit',{
+          displayName : req.user.displayName,
+          klant : klant,
+          customerAddresses : addresses ? addresses : []
+        });
+      })
     })
   },
   postEdit : function(req, res){
@@ -134,6 +141,59 @@ module.exports = {
       return res.send({'success' : true,
       klant : created});
     })
+  },
+  useExternalArticleNumber : function(req, res){
+    var use = req.body.useExternalArticleNumber;
+    var klantid = req.body.klantid;
+    Klants.update({klantnummer : klantid}, {useExternalArticleNumber : use}).exec(function(err, updated){
+      if(err) sails.log.error('[KlansController:useExternalArticleNumber] error update : ', err);
+      sails.log.debug('[KlantsController:useExternalArticleNumber] updated : ', updated);
+      return res.send({success : true});
+    })
+  },
+  editCustomerAddAddress : function(req, res){
+    var klantId = req.param('klantid');
+    var straat = req.body.straat;
+    var nr = req.body.nummer;
+    var postalcode = req.body.postcode;
+    var city = req.body.gemeente;
+    var owner = req.user.id;
+    var addresstype = req.body.addresstype;
+
+
+    var newCustomerAddress = {
+      street : straat,
+      number : nr,
+      postalcode : postalcode,
+      city : city,
+      typeAddress : addresstype ,
+      customer : klantId,
+      owner : owner
+    }
+    sails.log.debug('Create New CustomerAddress : ', newCustomerAddress);
+    CustomerAddress.create(newCustomerAddress).exec(function(err, newOne){
+      if(err) sails.log.error('[KlantsController:editCustomerAddAddress] Error : ', err);
+      sails.log.debug('[newOne : ', newOne);
+      res.redirect('/authenticated/klanten/edit/' + klantId);
+    })
+  },
+  deleteCustomerAddress : function(req, res){
+    var klantId = parseInt(req.param('klantid'));
+    var customerAddressId = parseInt(req.param('customerAddressId'));
+    var ownerId  = req.user.id;
+
+    /*sails.log.debug('customerAddressId: ', customerAddressId);
+    sails.log.debug('ownerId : ', ownerId);
+    sails.log.debug('klantId : ', klantId);*/
+
+    CustomerAddress.destroy({customerAddressId : customerAddressId, customer : klantId}).exec(function(err, deleted){
+      //sails.log.debug('[KlantsController:deleteCustomerAddress] delted : ', deleted);
+      if(err) sails.log.error('[KlantsController:deleteCustomerAddress] Error deleting : ', err);
+      res.send({
+        success : true
+      });
+    })
+
   }
 };
 

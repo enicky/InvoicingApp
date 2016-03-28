@@ -26,7 +26,12 @@ module.exports = {
       type : 'string',
       enum: ['new', 'deleted'],
       defaultsTo  : 'new'
-    }
+    },
+    customerAddress : {
+      collection : 'CustomerAddress',
+      via : 'customer'
+    },
+    useExternalArticleNumber : {type : 'boolean', defaultsTo:false}
   },
   afterDestroy : function(destroyedRecords, cb){
     Invoice.destroy({customer : _.pluck(destroyedRecords, 'klantnummer')}).exec(cb);
