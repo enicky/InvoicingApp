@@ -11,7 +11,7 @@ var fs = require('fs');
 
 module.exports = {
 	index : function(req, res){
-    Invoice.find({owner : req.user.id}).exec(function(err, invoices){
+    Invoice.find({owner : req.user.id, status : { '!' : 'deleted'}}).populate('customer').exec(function(err, invoices){
       if(err) sails.log.error('err :' , err);
       return res.render('./authenticated/facturen',{
         displayName : req.user.displayName,
@@ -24,16 +24,25 @@ module.exports = {
   },
   viewInvoice : function(req, res){
 
-    Invoice.find({owner:req.user.id, invoceid : req.params.id}).populate('customer').populate('invoiceLines').exec(function(err, invoices){
+    Invoice.find({owner:req.user.id, invoceid : req.params.id}).populate('customerAddress').populate('customer').populate('invoiceLines').exec(function(err, invoices){
       sails.log.debug('[InvoiceController:viewInvoice] Invoice :', invoices);
       var targetJade = './authenticated/facturen/view';
       this.p;
       var that = this;
+      var addressToUse = null;
+      if(invoices[0].customerAddress.constructor === Array){
+        addressToUse = invoices[0].customerAddress.find(function(n){
+          return n.customerAddressId == invoices[0].customerAddress;
+        })
+      }else{
+        addressToUse = invoices[0].customerAddress;
+      }
       Stock.find({}).exec(function(err, products){
         that.p = products
         res.view(targetJade, {
           invoice : invoices[0],
           klant : invoices[0].customer,
+          address : addressToUse,
           formatDate : function(d){
             return d.format('{dd}/{MM}/{yyyy}')
           },
@@ -88,8 +97,8 @@ module.exports = {
 
     var formatted = vandaag.format('{dd}/{MM}/{yyyy}');
     Klants.find({owner : req.user.id}).populate('customerAddress').exec(function(err, klanten){
-      sails.log.debug('Customer : ', klanten);
-      Stock.find({}).exec(function(errStock, stock){
+      //sails.log.debug('Customer : ', klanten);
+      Stock.find({owner : req.user.id}).exec(function(errStock, stock){
         if(errStock) sails.log.error('Error Getting Stock : ', errStock);
         return res.render('./authenticated/facturen/newQuote',{
           displayName : req.user.displayName,
@@ -105,9 +114,9 @@ module.exports = {
 
   ajaxDelete : function(req, res){
     var invoiceId = req.body.invoiceid;
-    sails.log.debug('invoiceId : ', invoiceId);
+    //sails.log.debug('invoiceId : ', invoiceId);
     Invoice.update({invoceid : invoiceId}, {status: 'deleted'}, function(err, invoices){
-      sails.log.debug('invoices : ', invoices);
+      //sails.log.debug('invoices : ', invoices);
       InvoiceLine.update({invoice : _.pluck(invoices, 'invoceid')}, {status : 'deleted'}, function(err){
         return res.send({success : true});
       });
@@ -229,6 +238,9 @@ module.exports = {
   saveNewQuote : function(req, res){
     var title = req.body.title;
     var klant = req.body.klant;
+    var klantId = klant.split('-')[0];
+    var addressId = klant.split('-')[1];
+
     var betalingsTermijn = req.body.betalingsTermijn;
     var factuurDatum = req.body.factuurDatum;
     var betaalDatum = req.body.betaalDatum;
@@ -240,13 +252,13 @@ module.exports = {
       return n.product;
     });
 
-    var hdnAddressId = req.body.hdnAddressId;
 
-    sails.log.debug('[InvoiceController:saveNewQuote] hdnAddressId : ', hdnAddressId);
+    sails.log.debug('[InvoiceController:saveNewQuote] body : ', req.body);
+
 
     var newInvoice = {
       title : title,
-      customer : parseInt(klant),
+      customer : parseInt(klantId),
       owner : req.user.id,
       status : 'quote',
       title : title,
@@ -257,7 +269,7 @@ module.exports = {
       btwTotaal : btwTotaal,
       totaal : totaal,
       invoiceLines : lines,
-      customerAddress : hdnAddressId
+      customerAddress : addressId
     };
     Invoice.create(newInvoice, function(err, newInvoice){
       if(err) {

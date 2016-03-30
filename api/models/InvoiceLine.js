@@ -31,6 +31,22 @@ module.exports = {
 
       cb();
     });
+  },
+  afterCreate : function(newRecord, cb){
+   // sails.log.debug('[InvoiceLine:afterCreate] newRecord created : ', newRecord);
+    var aantal = newRecord.aantal;
+    var productId = newRecord.product;
+
+    StockReservation.create({
+      product : productId,
+      aantal : aantal,
+      invoice : newRecord.invoice,
+      invoiceLine : newRecord.invoiceLineId
+    }).exec(function(err, created){
+      if(err) sails.log.error('[InvoiceLine:afterCreate] Error creating stockreservation : ', err);
+      return cb();
+    })
+
   }
 };
 

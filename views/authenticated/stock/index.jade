@@ -55,6 +55,7 @@ block content
                   th Naam
                   th Beschrijving
                   th In Stock
+                  th Gereserveerd
                   th Prijs
                   th Action
               tbody
@@ -66,6 +67,7 @@ block content
                     td= item.name
                     td= item.beschrijving
                     td= item.stock
+                    td= getStockReservations(item.stockReservation)
                     td= item.prijs
                     td
                       a.btn.btn-white.btn-sm(href='/authenticated/stock/edit/#{item.stockid}')
@@ -83,5 +85,6 @@ block content
                   th Naam
                   th Beschrijving
                   th In Stock
+                  th Gereserveerd
                   th Prijs
                   th Action

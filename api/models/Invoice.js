@@ -39,6 +39,31 @@ module.exports = {
 
       cb();
     });
+  },
+  afterUpdate : function(updatedRecord, cb){
+    sails.log.debug('[Invoice:afterUpdate] updatedRecord : ', updatedRecord);
+    if(updatedRecord.status == 'order'){
+      //order ... gereserveerde stock mag uit reservaties gaan ...
+      StockReservation.update({invoice : updatedRecord.invoceid}, {status : 'deleted'}).exec(function(err, updated){
+        if(err) sails.log.error('[Invoice:AfterUpdate] Error updating stockreservation : ', err);
+        sails.log.debug('[Invoice:afterUpdate] updated : ', updated);
+        async.each(updated, function(u, cb){
+          sails.log.debug('Update Stock : ', u.product);
+          Stock.findOne({stockid : u.product}).exec(function(err, stockItem){
+            var aantal = stockItem.stock;
+            aantal -= u.aantal;
+            Stock.update({stockid : u.product}, {stock : aantal}).exec(function(err, updatedStockItem){
+              return cb();
+            })
+          })
+        }, function(err){
+          sails.log.debug('Finished afterUpdate');
+          return cb();
+        })
+      })
+    }else{
+      return cb();
+    }
   }
 };
 

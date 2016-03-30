@@ -15,7 +15,11 @@ module.exports = {
     stock : {type : 'integer', defaultsTo : 0},
     prijs : { type : 'float', defaultsTo : 0},
     beschrijving: {type : 'string'},
-    owner : { model : 'User'}
+    owner : { model : 'User'},
+    stockReservation : {
+      collection : 'StockReservation',
+      via : 'invoice'
+    }
   },
   beforeCreate : function(values, cb){
     // add seq number, use

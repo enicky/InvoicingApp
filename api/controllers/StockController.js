@@ -4,14 +4,21 @@
  * @description :: Server-side logic for managing Stocks
  * @help        :: See http://links.sailsjs.org/docs/controllers
  */
+var sugar = require('sugar');
 
 module.exports = {
   index : function(req, res){
-    Stock.find({owner : req.user.id}).exec(function(err, stock){
+    Stock.find({owner : req.user.id}).populate('stockReservation').exec(function(err, stock){
       if(err) sails.log.error('Error find stock : ', err);
       return res.view('./authenticated/stock',{
         displayName : req.user.displayName,
-        stock : stock
+        stock : stock,
+        getStockReservations : function(stockReservations){
+          var sum = stockReservations.sum(function(n){
+            return n.status == 'reserved' ?  n.aantal : 0;
+          });
+          return sum;
+        }
       })
     });
   },

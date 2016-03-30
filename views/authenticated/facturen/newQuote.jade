@@ -2,11 +2,11 @@
 extends ../layout
 block head
   link(rel='stylesheet', href='/css/plugins/datepicker/datepicker3.css')
-  link(href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0-beta.3/css/select2.min.css", rel='stylesheet')
+
 
 block foot
   script(src='/js/plugins/datepicker/bootstrap-datepicker.js')
-  script(src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0-beta.3/js/select2.min.js")
+
   script(src='/js/pages/facturen/newQuote.js')
 
 block content
@@ -36,7 +36,7 @@ block content
           h5 Nieuwe Offerte
         .ibox-content
           form.form-horizontal(method='POST', action='/authenticated/facturen/newQuote')
-            input(type='hidden', name='hdnAddressId', id="hdnAddressId")
+            input(type='hidden', name='addressid', id='addressid', value='')
             .col-lg-6.col-md-6.col-xs-12
               .form-group
                 label.col-lg-2.control-label Naam

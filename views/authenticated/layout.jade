@@ -10,6 +10,7 @@ html
     link(rel='stylesheet', href='/js/plugins/sweetalert/sweetalert.css')
     link(rel='stylesheet', href='/js/plugins/toastr/toastr.min.css')
     link(rel='stylesheet', href='/css/style.css')
+    link(href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0-beta.3/css/select2.min.css", rel='stylesheet')
     block head
 
 body.pace-done
@@ -137,8 +138,8 @@ body.pace-done
 
   block foot
 
-  //
-      Custom and plugin javascript
+  //Custom and plugin javascript
+  script(src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0-beta.3/js/select2.min.js")
   script(src='/js/inspinia.js')
   script(src='/js/plugins/pace/pace.min.js')
   script(src='/js/plugins/toastr/toastr.min.js')

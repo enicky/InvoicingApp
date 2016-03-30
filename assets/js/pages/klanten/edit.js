@@ -2,6 +2,8 @@
  * Created by NicholasE on 27/11/2014.
  */
 $(function(){
+  $('#addresstype').select2();
+
   $('[name="useExternalArticleNumber"]').click(function(e){
     var isChecked = $(this).is(":checked");
     var klantid = $('[name="klantid"]').val();

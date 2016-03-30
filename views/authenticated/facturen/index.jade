@@ -43,6 +43,7 @@ block content
               thead
                 tr
                   th Invoice Id
+                  th Klant
                   th Title
                   th invoiceDate
                   th Totaal
@@ -54,6 +55,7 @@ block content
                 each item in invoices
                   tr
                     td= item.invoceid
+                    td= item.customer.naam
                     td= item.title
                     td= formatDate(item.factuurdatum)
                     td.text-right= item.subTotaal
@@ -78,6 +80,7 @@ block content
               tfoot
                 tr
                   th Invoice Id
+                  th Klant
                   th Title
                   th invoiceDate
                   th Totaal
