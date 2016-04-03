@@ -15,6 +15,7 @@ module.exports = {
     stock : {type : 'integer', defaultsTo : 0},
     prijs : { type : 'float', defaultsTo : 0},
     beschrijving: {type : 'string'},
+    eannummer : {type : 'string'},
     owner : { model : 'User'},
     stockReservation : {
       collection : 'StockReservation',

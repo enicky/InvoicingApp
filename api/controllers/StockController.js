@@ -5,6 +5,14 @@
  * @help        :: See http://links.sailsjs.org/docs/controllers
  */
 var sugar = require('sugar');
+var stream = require( "stream" );
+var util = require( "util" );
+var fs = require( "fs" );
+var path  = require('path');
+var JsBarcode = require('jsbarcode');
+var Canvas = require("canvas");
+var PDFDocument = require('pdfkit');
+var async = require('async');
 
 module.exports = {
   index : function(req, res){
@@ -36,6 +44,7 @@ module.exports = {
 
     var artikelnummer = req.body.artikelnummer;
     var externartikelnummer = req.body.externartikelnummer;
+    var eannummer = req.body.eannummer;
 
 
     var newArticle = {
@@ -45,7 +54,8 @@ module.exports = {
       prijs : parseFloat(prijs),
       owner : req.user.id,
       artikelnummer : artikelnummer,
-      externArtikelNummer : externartikelnummer
+      externArtikelNummer : externartikelnummer,
+      eannummer : eannummer
     };
     Stock.create(newArticle, function(err, newArticle){
       return res.redirect('/authenticated/stock');
@@ -67,6 +77,8 @@ module.exports = {
     var artikelnummer = req.body.artikelnummer;
     var prijs = req.body.prijs;
     var beschrijving= req.body.beschrijving;
+    var eannummer = req.body.eannummer;
+
 
 
     var newArticle = {
@@ -75,7 +87,8 @@ module.exports = {
       stock : stock,
       prijs : prijs,
       beschrijving : beschrijving,
-      owner : req.user.id
+      owner : req.user.id,
+      eannummer : eannummer
     };
     Stock.update({stockid : stockid}, newArticle, function(err){
       if(err) sails.log.error('error updating stock : ' , err);
@@ -110,6 +123,111 @@ module.exports = {
         "article" : created
       })
     })
+  },
+  generateBarcode : function(req, res){
+    function BufferStream( source ) {
+
+      if ( ! Buffer.isBuffer( source ) ) {
+
+        throw( new Error( "Source must be a buffer." ) );
+
+      }
+
+      // Super constructor.
+      stream.Readable.call( this );
+
+      this._source = source;
+
+      // I keep track of which portion of the source buffer is currently being pushed
+      // onto the internal stream buffer during read actions.
+      this._offset = 0;
+      this._length = source.length;
+
+      // When the stream has ended, try to clean up the memory references.
+      this.on( "end", this._destroy );
+
+    }
+
+    util.inherits( BufferStream, stream.Readable );
+
+    BufferStream.prototype._destroy = function() {
+
+      this._source = null;
+      this._offset = null;
+      this._length = null;
+
+    };
+    BufferStream.prototype._read = function( size ) {
+
+      // If we haven't reached the end of the source buffer, push the next chunk onto
+      // the internal stream buffer.
+      if ( this._offset < this._length ) {
+
+        this.push( this._source.slice( this._offset, ( this._offset + size ) ) );
+
+        this._offset += size;
+
+      }
+
+      // If we've consumed the entire source buffer, close the readable stream.
+      if ( this._offset >= this._length ) {
+
+        this.push( null );
+
+      }
+
+    };
+
+
+    var receivedIds = req.body.ids;
+    var ids = receivedIds.map(function(n){
+      return parseInt(n);
+    });
+
+
+    sails.log.debug('[StockController:generateBarcode] Received ids : ', receivedIds);
+    var doc = new PDFDocument();
+    doc.pipe(fs.createWriteStream(path.join(__dirname, 'tempimages','output.pdf')));
+
+
+
+    async.each(ids, function(item, cb){
+      Stock.findOne({stockid : item}).exec(function(err, stockItem){
+        var n = stockItem.stockid;
+        var out = fs.createWriteStream(path.join(__dirname, 'tempimages', 'stock-' + n + '.png'));
+        var canvas = new Canvas();
+        JsBarcode(canvas, "Stock..."+ n) ;
+        var str = canvas.pngStream();
+        str.on('data', function(chunk){
+          out.write(chunk);
+        });
+
+        str.on('end', function(){
+          console.log('saved png');
+          setTimeout(function(){
+            console.log('createn .... ');
+            return cb();
+          }, 200);
+          /*doc.fontSize(15);
+          doc.text('Item : ' +  stockItem.artikelnummer + ' -- ' + stockItem.eannummer);
+          doc.image(path.join(__dirname,'tempimages','stock-' + n + '.png'));
+          doc.moveDown();*/
+
+        });
+      })
+
+    }, function(err){
+      console.log('finished');
+      doc.save();
+      doc.end();
+    })
+
+
+
+    //console.log('<img src="' + canvas.toDataURL() + '" />');
+    //res.setHeader('Content-Type', "application/pdf");
+    //res.setHeader('Content-disposition', 'attachment; filename=Untitled.pdf');
+    //new BufferStream( canvas.toBuffer()).pipe(res);
   }
 };
 

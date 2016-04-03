@@ -18,7 +18,7 @@ block content
           strong Nieuw Artikel
     .col-lg-2
   .row.wrapper.wrapper-content.animated.fadeInRight
-    .col-lg-5
+    .col-lg-12
       .ibox.float-e-margins
         .ibox-title
           h5 Nieuw Artikel
@@ -38,27 +38,31 @@ block content
           form.form-horizontal(method='POST', action='/authenticated/stock/edit')
             input(type='hidden', name='stockid', value='#{stock.stockid}')
             .form-group
-              label.col-lg-2.control-label Artikel nummer
-              .col-lg-10
+              label.col-lg-3.control-label Artikel nummer
+              .col-lg-9
                 input.form-control(type='text', placeholder='Artikel nummer', name='artikelnummer', value='#{stock.artikelnummer}')
             .form-group
-              label.col-lg-2.control-label Naam
-              .col-lg-10
+              label.col-lg-3.control-label Naam
+              .col-lg-9
                 input.form-control(type='text', placeholder='Naam', name='naam', value='#{stock.name}')
             .form-group
-              label.col-lg-2.control-label Beschrijving
-              .col-lg-10
+              label.col-lg-3.control-label Beschrijving
+              .col-lg-9
                 input.form-control(type='text', placeholder='Beschrijving', name='beschrijving', value='#{stock.beschrijving}')
             .form-group
-              label.col-lg-2.control-label Prijs
-              .col-lg-10
+              label.col-lg-3.control-label Prijs
+              .col-lg-9
                 input.form-control(type='text', placeholder='Prijs', name='prijs', value='#{stock.prijs}')
             .form-group
-              label.col-lg-2.control-label Stock
-              .col-lg-10
+              label.col-lg-3.control-label Stock
+              .col-lg-9
                 input.form-control(type='number', placeholder='Stock', name='stock', value='#{stock.stock}')
             .form-group
-              .col-lg-offset-2.col-lg-10
+              label.col-lg-3.control-label  EAN Nummer
+              .col-lg-9
+                input.form-control(type='text',placeholder='EAN Nummer', name='eannummer', value='#{stock.eannummer}')
+            .form-group
+              .col-lg-offset-3.col-lg-10
                 button.btn.btn-sm.btn-white(type='submit') Sla Op
                 | &nbsp;
                 a.btn.btn-sm.btn-danger(href='/authenticated/stock') Ga terug

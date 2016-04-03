@@ -24,10 +24,14 @@ block content
     .col-lg-2
   .wrapper.wrapper-content.animated.fadeInRight
     .row
-      .col-lg-3
+      .col-lg-6
         .ibox.float-e-margins
           .ibox-content
-            a.btn.btn-primary(href='/authenticated/stock/new') Voeg Artikel Toe
+            a.btn.btn-white(href='/authenticated/stock/new')
+              i.fa.fa-plus
+            | &nbsp;
+            a.btn.btn-white(name="btnCreateBarcode")
+              i.fa.fa-barcode
     .row
       .col-lg-12
         .ibox.float-e-margins
@@ -49,6 +53,7 @@ block content
             table.table.table-striped.table-bordered.table-hover.dataTables-example
               thead
                 tr
+                  th &nbsp;
                   th Id
                   th Art#
                   th Ext. Art#
@@ -61,6 +66,8 @@ block content
               tbody
                 each item in stock
                   tr
+                    td
+                      input(type='checkbox', name='chkStock', data-id='#{item.stockid}')
                     td= item.stockid
                     td= item.artikelnummer
                     td= item.externArtikelNummer
@@ -79,6 +86,7 @@ block content
                         | &nbsp;Delete
               tfoot
                 tr
+                  th &nbsp;
                   th Id
                   th Art#
                   th Ext. Art#

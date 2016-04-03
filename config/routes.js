@@ -73,6 +73,8 @@ module.exports.routes = {
 
   'post /authenticated/stock/ajax/new' : 'StockController.ajaxNew',
 
+  'post /authenticated/stock/barcode/generate' : 'StockController.generateBarcode',
+
 
   //INVOICES
   'get /authenticated/allinvoices' : 'InvoiceController.index',
@@ -96,7 +98,12 @@ module.exports.routes = {
   'get /authenticated/invoices/convert/order/:quoteid' : 'InvoiceController.convertToOrder',
 
   //AUTH0 login
-  'get /Auth0Login' : 'Auth0Controller.index'
+  'get /Auth0Login' : 'Auth0Controller.index',
+
+  //SETTINGS
+  'get /authenticated/settings' : 'SettingsController.index',
+  'get /authenticated/settings/new' : 'SettingsController.newSettings',
+  'post /authenticated/settings/new' : 'SettingsController.postNewSettings'
 
   /***************************************************************************
   *                                                                          *
